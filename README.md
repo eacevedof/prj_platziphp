@@ -56,15 +56,32 @@
     - A partir de la instalación de composer solo se necesitaría un require_once 'vendor/autoload'
 
 #### 5. Bases de Datos 
-- [25 Introducción a las Bases de Datos 3:00 min]()
-- [26 ORM 3:00 min]()
-- [27 Formularios 10:00 min]()
-- [28 Eloquent 15:00 min]()
-- [29 Listar registros de la base de datos con Eloquent 5:00 min]()
-- [30 Insertar datos en MySql con PHP 22:00 min]()
+- [25 Introducción a las Bases de Datos 3:00 min](https://platzi.com/clases/1338-php/12936-introduccion-a-las-bases-de-datos/)
+- [26 ORM 3:00 min](https://platzi.com/clases/1338-php/12937-orm/)
+    - Object Relational Mapping
+- [27 Formularios 10:00 min](https://platzi.com/clases/1338-php/12938-formularios7301/)
+- [28 Eloquent 15:00 min](https://platzi.com/clases/1338-php/12939-eloquent8724/)
+    - composer require illuminate/database
+    - composer.lock sirve para evitar que se actualice el proyecto con versiones posteriores de modo que no funcione
+    - congela también las dependencias
+    - nunca se debe subir vendor al repositorio
+    - Por convenio se llama capsule al manager:  `use Illuminate\Database\Capsule\Manager as Capsule`
+    - deben existir: `created_at` y `updated_at`
+    - `$capsule->addConnection([])`
+    - métodos: `setAsGlobal()` permite reutilizar esta conexión a nivel global y `bootEloquent()` sirve para trabajar con eventos
+- [29 Listar registros de la base de datos con Eloquent 5:00 min](https://platzi.com/clases/1338-php/12940-listar-registros-de-la-base-de-datos-con-eloquent/)
+    - Método estático `Job::all()`
+    - Por defecto todos los atributos mapeados de la bd en el modelo son públicos (se puede cambiar)
+    
+- [30 Insertar datos en MySql con PHP 22:00 min](https://platzi.com/clases/1338-php/12941-insertar-datos-en-mysql-con-php/)
+    ```php
+    class User extends Illuminate\Database\Eloquent\Model {}
+    $users = User::where('votes', '>', 1)->get();
+    ```
 
 #### 6. Estructura/Arquitectura de una applicacion web 
-- [31 Front Controller 12:00 min]()
+- [31 Front Controller 12:00 min](https://platzi.com/clases/1338-php/12942-front-controller/)
+    - 
 - [32 PSR7 14:00 min]()
 - [33 Router 10:00 min]()
 - [34 MVC, Creando Controllers 12:00 min]()
