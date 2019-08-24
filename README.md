@@ -7,9 +7,9 @@
 - Parte 2: [https://platzi.com/clases/php-avanzado/](https://platzi.com/clases/php-avanzado/)
     - [Abajo 2](https://github.com/eacevedof/prj_platziphp#parte-2-curso-avanzado-de-php)
 
-## Parte 1: Curso de Introducción a PHP
+## Parte 1: [Curso de Introducción a PHP](https://platzi.com/clases/php/)
 
-#### 1. [Introducción a PHP](https://platzi.com/clases/php/) 
+#### 1. Introducción a PHP
 - [1 Presentación del curso 1:00 min]()
 - [2 ¿Qué es PHP? 4:00 min]()
 - [3 Setup y Herramientas 11:00 min]()
