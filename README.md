@@ -40,11 +40,15 @@
     - Polimorfismo: sobreescritura que permite cambiar el comportamiento de un método y por ende de un objeto
 - [21 Interfaces 8:00 min](https://platzi.com/clases/1338-php/12932-interfaces6240/)
     - Las interfaces solo usan métodos públicos
-- [22 Namespaces 9:00 min](https://platzi.com/clases/1338-php/12933-namespaces8948/)
+- [22 Namespaces 9:00 min](https://platzi.com/clases/1338-php/12933-namespaces8948/) 
 
 #### 4. Herramientas para Proyectos 
-- [23 PHP PSR y PHPFIG 2:00 min]()
-- [24 Composer 9:00 min]()
+- [23 PHP PSR y PHPFIG 2:00 min](https://platzi.com/clases/1338-php/12934-psr-y-phpfig/)
+    - Varios programadores se unieron para crear un grupo llamado [PHP-FIG](https://www.php-fig.org) con el objetivo de avanzar en la interoperabilidad de librerías en PHP.
+    Este grupo creo el PSR que son recomendaciones y estándares para tu código de PHP.
+    - PSR: PHP Standard Recomendations
+- [24 Composer 9:00 min](https://platzi.com/clases/1338-php/12935-composer/)
+    - PSR4: Standard de autoloading
 
 #### 5. Bases de Datos 
 - [25 Introducción a las Bases de Datos 3:00 min]()
