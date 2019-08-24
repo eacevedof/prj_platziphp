@@ -1,4 +1,7 @@
 RewriteEngine On
+# si ya estamos en la carpeta public con algo no se haga la redirección
 RewriteCond %{THE_REQUEST} /public/([^\s?]*) [NC]
+# cuando se haga la redirección a public que envie un 302
 RewriteRule ^ %1 [L,NE,R=302]
+# cuando encuentre cualquier cosa la mande directo a public
 RewriteRule ^((?!public/).*)$ public/$1 [L,NC]

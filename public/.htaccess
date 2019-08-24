@@ -1,4 +1,8 @@
 RewriteEngine On
+# si el archivo que estamos pidiendo no es un directorio seguimos probando
 RewriteCond %{REQUEST_FILENAME} !-d
+# si el archivo no existe
 RewriteCond %{REQUEST_FILENAME} !-f
+# se envia la petición a index.php QSA: Query String Append, L: la ultima regla
+# QSA todo lo que mandamos se agrega al querystring
 RewriteRule ^ index.php [QSA,L]

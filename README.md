@@ -72,7 +72,6 @@
 - [29 Listar registros de la base de datos con Eloquent 5:00 min](https://platzi.com/clases/1338-php/12940-listar-registros-de-la-base-de-datos-con-eloquent/)
     - Método estático `Job::all()`
     - Por defecto todos los atributos mapeados de la bd en el modelo son públicos (se puede cambiar)
-    
 - [30 Insertar datos en MySql con PHP 22:00 min](https://platzi.com/clases/1338-php/12941-insertar-datos-en-mysql-con-php/)
     ```php
     class User extends Illuminate\Database\Eloquent\Model {}
@@ -81,13 +80,73 @@
 
 #### 6. Estructura/Arquitectura de una applicacion web 
 - [31 Front Controller 12:00 min](https://platzi.com/clases/1338-php/12942-front-controller/)
-    - 
-- [32 PSR7 14:00 min]()
-- [33 Router 10:00 min]()
-- [34 MVC, Creando Controllers 12:00 min]()
-- [35 MVC Reestructurando Vistas y Controladores 10:00 min]()
-- [36 MVC Controller de la entidad Job 9:00 min]()
-
+    - Es un patrón de diseño
+    - Recibirá todas las peticiones y ejecutará un dispatcher
+    - Se crea carpeta public
+- [32 PSR7 14:00 min](https://platzi.com/clases/1338-php/12943-psr7/)
+    - Standard Http Message
+    - Usamos una libreria de Zend
+    - `composer require zendframework/zend-diactoros`
+    - [doc](https://docs.zendframework.com/zend-diactoros/v2/usage/)
+    ```php
+    $request = Zend\Diactoros\ServerRequestFactory::fromGlobals(
+        $_SERVER,
+        $_GET,
+        $_POST,
+        $_COOKIE,
+        $_FILES
+    );
+    
+    //en la raiz del proyecto
+    RewriteEngine On
+    # si ya estamos en la carpeta public con algo no se haga la redirección
+    RewriteCond %{THE_REQUEST} /public/([^\s?]*) [NC]
+    # cuando se haga la redirección a public que envie un 302
+    RewriteRule ^ %1 [L,NE,R=302]
+    # cuando encuentre cualquier cosa la mande directo a public
+    RewriteRule ^((?!public/).*)$ public/$1 [L,NC]
+  
+    //en public
+    RewriteEngine On
+    # si el archivo que estamos pidiendo no es un directorio seguimos probando
+    RewriteCond %{REQUEST_FILENAME} !-d
+    # si el archivo no existe
+    RewriteCond %{REQUEST_FILENAME} !-f
+    # se envia la petición a index.php QSA: Query String Append, L: la ultima regla
+    # QSA todo lo que mandamos se agrega al querystring
+    RewriteRule ^ index.php [QSA,L]
+    ```
+    - Siempre que se pida la raiz se enviará a public
+    - Siempre que se pida algo se enviará a index.php
+    - En este punto ya es compatible con psr-7
+- [33 Router 10:00 min](https://platzi.com/clases/1338-php/12944-router/)
+    - `composer require aura/router`
+    - [https://github.com/auraphp/Aura.Router/blob/HEAD/docs/index.md](https://github.com/auraphp/Aura.Router/blob/HEAD/docs/index.md)
+    ```php
+    use Aura\Router\RouterContainer;
+    $routerContainer = new RouterContainer();
+    $map = $routerContainer->getMap();
+    $request = Zend\Diactoros\ServerRequestFactory::fromGlobals(
+        $_SERVER,
+        $_GET,
+        $_POST,
+        $_COOKIE, 
+        $_FILES
+    );  
+    $matcher = $routerContainer->getMatcher();
+    $route = $matcher->match($request);
+    $route->handler; //devuelve el string, tercer parámetro configurado
+    ```
+- [34 MVC, Creando Controllers 12:00 min](https://platzi.com/clases/1338-php/12945-mvc-creando-controllers/)
+    - Patrón de diseño
+    - Los modelos y las vistas nunca deberían hablar entre si.
+- [35 MVC Reestructurando Vistas y Controladores 10:00 min](https://platzi.com/clases/1338-php/12946-mvc-reestructurando-vistas-y-controladores/)
+    - Se separa la vista con includes
+- [36 MVC Controller de la entidad Job 9:00 min](https://platzi.com/clases/1338-php/12983-mvc-controller-de-la-entidad-job/)
+    - Cuando enviamos parámetros en POST no lo hacemos en la url sino que lo hacemos dentro del cuerpo de código.
+    - Ahora ya tenemos organizado todo en controladores, vistas y modelos además de estár implementados los estandares PSR4 y PSR7. 
+    - Ya no trabajamos con $_POST o $_GET usamos **$request->getBody()**
+    
 #### 7. Template engines
 - [37 Template engines 4:00 min]()
 - [38 Twig 13:00 min]()
