@@ -49,6 +49,11 @@
     - PSR: PHP Standard Recomendations
 - [24 Composer 9:00 min](https://platzi.com/clases/1338-php/12935-composer/)
     - PSR4: Standard de autoloading
+    - PSR4 es la segunda versión de autoloading, antes PSR0
+    - Relación entre rutas físicas de las clases y los namespaces.
+    - En composer.json hay que indicar dentro de autoload: psr-4:{...}
+    - phar: son archivos de empaquetado completo similar a los .jar de Java
+    - A partir de la instalación de composer solo se necesitaría un require_once 'vendor/autoload'
 
 #### 5. Bases de Datos 
 - [25 Introducción a las Bases de Datos 3:00 min]()
