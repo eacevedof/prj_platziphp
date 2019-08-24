@@ -27,15 +27,20 @@
 - [13 Operadores 2:00 min]()
 - [14 Ejercicios Operadores 1:00 min]()
 - [15 Funciones 13:00 min]()
-- [16 Agregando archivos externos 8:00 min]()
+- [16 Agregando archivos externos 8:00 min](https://platzi.com/clases/1338-php/12928-agregando-archivos-externos/)
+    - include: si no existe lanza warning
+    - require: si no existe termina con error
 
 #### 3. Programación Orientada a Objetos 
-- [17 Programación Orientada a Objetos 13:00 min]()
-- [18 Constructor y Métodos 10:00 min]()
-- [19 Herencia 17:00 min]()
-- [20 Herencia y polimorfismo 2:00 min]()
-- [21 Interfaces 8:00 min]()
-- [22 Namespaces 9:00 min]()
+- [17 Programación Orientada a Objetos 13:00 min](https://platzi.com/clases/1338-php/12929-programacion-orientada-a-objetos1172/)
+- [18 Constructor y Métodos 10:00 min](https://platzi.com/clases/1338-php/12930-constructor-y-metodos/)
+- [19 Herencia 17:00 min](https://platzi.com/clases/1338-php/12931-herencia4055/)
+- [20 Herencia y polimorfismo 2:00 min](https://platzi.com/clases/1338-php/16406-herencia-y-polimorfismo9153/)
+    - Herencia: permite la reutilizar un código 
+    - Polimorfismo: sobreescritura que permite cambiar el comportamiento de un método y por ende de un objeto
+- [21 Interfaces 8:00 min](https://platzi.com/clases/1338-php/12932-interfaces6240/)
+    - Las interfaces solo usan métodos públicos
+- [22 Namespaces 9:00 min](https://platzi.com/clases/1338-php/12933-namespaces8948/)
 
 #### 4. Herramientas para Proyectos 
 - [23 PHP PSR y PHPFIG 2:00 min]()
