@@ -1,7 +1,7 @@
 # prj_platziphp
 - [Github - Repo Original](https://github.com/hectorbenitez/curso-introduccion-php)
 
-## Curso completo de php 
+## Curso completo de php Profesor Héctor Benitez
 - Parte 1: [https://platzi.com/clases/php/](https://platzi.com/clases/php/)
     - [Abajo 1](https://github.com/eacevedof/prj_platziphp#parte-1-curso-de-introducci%C3%B3n-a-php)
 - Parte 2: [https://platzi.com/clases/php-avanzado/](https://platzi.com/clases/php-avanzado/)
@@ -148,11 +148,53 @@
     - Ya no trabajamos con $_POST o $_GET usamos **$request->getBody()**
     
 #### 7. Template engines
-- [37 Template engines 4:00 min]()
-- [38 Twig 13:00 min]()
-- [39 Templates con Twig 11:00 min]()
-- [40 Extendiendo Templates con Twig 7:00 min]()
+- [37 Template engines 4:00 min](https://platzi.com/clases/1338-php/12984-template-engines/)
+- [38 Twig 13:00 min](https://platzi.com/clases/1338-php/12985-twig/)
+    - a Symfony Product
+    - `composer require twig/twig`
+    ```php
+    class BaseController 
+    {
+        protected $oTwigEnviroment;
 
+        public function __construct()
+        {
+            $oTwigLoader = new \Twig_Loader_Filesystem("../views");
+            $this->oTwigEnviroment = new \Twig_Enviroment($oTwigLoader,["debug"=>true,"cache"=>false]);
+        }
+
+        public function renderHTML($fileName,$data=[])
+        {
+            return $this->oTwigEnviroment->render($filename,$data);
+        }
+    }
+
+    //en otro controlador_hijo.metodo
+    echo $this->renderHTML("index.twig",["name"=>$datos,"jobs"=>$jobs]);
+    ```
+- [39 Templates con Twig 11:00 min](https://platzi.com/clases/1338-php/12986-templates-con-twig/)
+    - Twig ya no permite meter php directamente en los .twig
+    - Las flechas: `$obj->atributo` ahora se transforman en `obj.atributo`
+    - Se define un objeto **$response**
+    - `return new HtmlResponse($this->oTwigEnviroment->render($filename,$data));`
+    - En el frontcontroller se hace un `echo $response->getBody()`
+- [40 Extendiendo Templates con Twig 7:00 min](https://platzi.com/clases/1338-php/12987-extendiendo-templates-con-twig/)
+    - **layout.twig**
+    - Se crearán bloques que pueden ser remplazables.
+    - Los bloques son como variables
+    - En la zona dinámica del layout se crea un bloque tipo: `{% block content %}{% endblock %}`
+    - Para recubrir los templates hijos se debe incluir las siguientes sentencias:
+        ```php
+        //archivo twig hijo con zona dinámica
+        {% extends "layout.twig" %}
+
+        // se define el bloque que se inyectará en layout.twig.block.content
+        {% block content %}
+            ...
+            todo el contenido a inyectar 
+            ...
+        {% endblock %}
+        ```
 #### 8. Validaciones 
 - [41 Validaciones 15:00 min]()
 
