@@ -9,7 +9,7 @@
 
 ## Parte 1: Curso de Introducción a PHP
 
-#### 1. Introducción a PHP 
+#### 1. [Introducción a PHP](https://platzi.com/clases/php/) 
 - [1 Presentación del curso 1:00 min]()
 - [2 ¿Qué es PHP? 4:00 min]()
 - [3 Setup y Herramientas 11:00 min]()
@@ -83,7 +83,8 @@
 - [51 Creando la base de datos en Heroku 6:00 min]()
 - [52 Conclusiones del curso 1:00 min]()
 
-## Parte 2: Curso Avanzado de PHP
+## Parte 2: [Curso Avanzado de PHP](https://platzi.com/clases/php-avanzado/)
+
 #### 1 Introducción 
 - [1 Introducción 1:00 min]()
 
