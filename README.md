@@ -196,8 +196,26 @@
         {% endblock %}
         ```
 #### 8. Validaciones 
-- [41 Validaciones 15:00 min]()
+- [41 Validaciones 15:00 min](https://platzi.com/clases/1338-php/12991-validaciones/)
+    - [`composer require respect/validation`](https://packagist.org/packages/respect/validation)
+    - `use Respect\Validation\Validator as v;`
+    - con **v::key(...)** se configuran todas las reglas de validación sobre claves del **$_POST**
+    - con el metodo `$validator->validate` comprobamos si es válido pero si deseamos podemos forzar una excepción
+    - `$validator->assert($postData) lanza una excepción`
+    ```php
+    try{
+        $validator->assert($postData);
+        $job = new Job();
+        $job->title = $postData["title"];
+        $job->description = $postData["description"];
+        $job->save();
+        $message = "Saved";
+    }catch(\Exception $e){
+        $message = $e->getMeesage();
+    }
 
+    return $this->renderHTML("addJob.twig",["message"=>$message]);
+    ```
 #### 9. Subida de archivos
 - [42 Ejemplo de subida de archivos 13:00 min]()
 - [43 Tips de seguridad para subir archivos en PHP 2:00 min]()
