@@ -217,8 +217,32 @@
     return $this->renderHTML("addJob.twig",["message"=>$message]);
     ```
 #### 9. Subida de archivos
-- [42 Ejemplo de subida de archivos 13:00 min]()
-- [43 Tips de seguridad para subir archivos en PHP 2:00 min]()
+- [42 Ejemplo de subida de archivos 13:00 min](https://platzi.com/clases/1338-php/12988-ejemplo-de-subida-de-archivos/)
+    - `<form action="/jobs/add" method="post" enctype="multipart/form-data">`
+    ```php
+    $files = $request->getUploadedFiles();
+    //lo ideal es tener un servidor CDN para las imágenes
+    $logo = $files["logo"];
+    if($logo->getError() == UPLOAD_ERR_OK){
+        $fileName = $logo->getClientFilename();
+        //antes de llamar a moveTo, el archivo se encuentra en una zona de memoria que usa php
+        //para gestionar los archivos intermedios
+        $logo->moveTo("uploads/$filename");
+    }
+
+    //chmod 777 sobre uploads
+    ```
+    - se recomienda aplicar unos filtros antes de subir, una buena práctica es aplicar captcha
+- [43 Tips de seguridad para subir archivos en PHP 2:00 min](https://platzi.com/clases/1338-php/12989-tips-de-seguridad-para-subir-archivos-en-php/)
+    - De ser posible almacena los archivos en un servicio externo a tu aplicación como Amazon S3.
+        - [Ejemplo](https://docs.aws.amazon.com/es_es/AmazonS3/latest/dev/UploadObjSingleOpPHP.html)
+    - Cuida los permisos.
+    - Verifica el tipo de archivo que están subiendo.
+    - Limita el tamaño de los archivos permitidos
+    - Si tu aplicación usa login
+    - Genera un nombre de archivo aleatorio y añade la extensión previamente generada.
+    - No confíes sólo en una validación por el lado del cliente, no es suficiente.
+    - No uses solo una medida de protección.
 
 #### 10. Autenticación de usuarios y manejo de sesiones Reto. 
 - [44 Creación de usuarios 2:00 min]()
