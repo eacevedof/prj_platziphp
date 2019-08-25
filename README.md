@@ -320,13 +320,40 @@
         unset($_SESSION["userId"])
         return new RedirectResponse("/login");
     ```
-    
+
 #### 11. Liberación de código/release 
-- [48 Variables de entorno 8:00 min]()
-- [49 Deploy en Heroku 6:00 min]()
-- [50 Instalación de pgAdmin 1:00 min]()
-- [51 Creando la base de datos en Heroku 6:00 min]()
-- [52 Conclusiones del curso 1:00 min]()
+- [48 Variables de entorno 8:00 min](https://platzi.com/clases/1338-php/12995-variables-de-entorno/)
+    - [pacagist vlucas/phpdotenv](https://packagist.org/packages/vlucas/phpdotenv)
+    - `composer require vlucas/phpdotenv`
+    ```php
+    //index.php
+    ...
+    session_start();
+    //Dotenv(...) en que directorio debe encontrar el fichero que vamos a importar
+    //__DIR__ apunta a public
+    $dotenv = new Dotenv\Dotenv(__DIR__."/..");
+    $dotenv->load();
+
+    //se crea archivo .env
+    DB_HOST=localhost
+    DB_NAME=cursophp
+    ...
+    
+    //index.php
+    $capsule->addConnection([
+        "driver"    => ...
+        "host"      => getenv("DB_HOST"),
+        ...
+    ]);
+
+    //se crea archivo: .env.sample 
+    ```
+- [49 Deploy en Heroku 6:00 min](https://platzi.com/clases/1338-php/12996-deploy-en-heroku/)
+    - se usa la app heroku git
+    - `heroku git:remote -a curso-introduccion-php`
+- [50 Instalación de pgAdmin 1:00 min](https://platzi.com/clases/1338-php/12997-instalacion-de-pgadmin/)
+- [51 Creando la base de datos en Heroku 6:00 min](https://platzi.com/clases/1338-php/12998-creando-la-base-de-datos-en-heroku/)
+- [52 Conclusiones del curso 1:00 min](https://platzi.com/clases/1338-php/12999-conclusiones-del-curso1287/)
 
 ## Parte 2: [Curso Avanzado de PHP](https://platzi.com/clases/php-avanzado/)
 
