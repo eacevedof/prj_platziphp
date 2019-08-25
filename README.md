@@ -245,11 +245,82 @@
     - No uses solo una medida de protección.
 
 #### 10. Autenticación de usuarios y manejo de sesiones Reto. 
-- [44 Creación de usuarios 2:00 min]()
-- [45 Autenticando usuarios 16:00 min]()
-- [46 Formulario de Login 10:00 min]()
-- [47 Manejo de sesiones 14:00 min]()
+- [44 Creación de usuarios 2:00 min](https://platzi.com/clases/1338-php/12993-reto-creacion-de-usuarios/)
+    - **Nunca** se guarda en texto plano
+    - funciones nativas de php: 
+    - **`password_hash(string $password, integer $algo [, array $options])`**
+    - **`password_verify()`**
+- [45 Autenticando usuarios 16:00 min](https://platzi.com/clases/1338-php/12990-autenticando-usuarios/)
+    ```php
+    //AuthController.php
+    $postData = $request->getParsedBody();
+    $user = User::where("email",$postData["email"])->first();
+    if($user){
+        if(\password_verify($postData["password"], $user->password)){
 
+        }
+        else{
+
+        }
+    }
+    else{
+
+    }
+    ```
+- [46 Formulario de Login 10:00 min](https://platzi.com/clases/1338-php/12992-formulario-de-login/)
+    ```php
+    //AuthController.php
+    $postData = $request->getParsedBody();
+    $user = User::where("email",$postData["email"])->first();
+    if($user){
+        if(\password_verify($postData["password"], $user->password)){
+            $_SESSION["userId"] = $user->id;
+            return new \Zend\Diactoros\Response\RedirectResponse("/admin");
+        }
+        else{
+            $responsemsg = "bad credentials";
+        }
+    }
+    else{
+        $responsemsg = "bad credentials";
+    }
+    return $this->renderHTML("login.twig",["responsemsg"=>$responsemsg]);
+
+    //index.php
+    foreach($reponse->getHeaders() as $name => $values)
+        foreach($values as $value)
+            header(sprintf("%s: %s",$name,$value));
+    response_code($response->getStatusCode());
+    ```
+- [47 Manejo de sesiones 14:00 min](https://platzi.com/clases/1338-php/12994-manejo-de-sesiones6416/)
+    ```php
+    //index.php
+    $map->get("admin","/admin",[
+        "controller" => ...
+        ...
+        //se define esta variable extra en la ruta que indica que solo se puede ver el contenido si se ha iniciado sesion        
+        "auth" => true 
+    ])
+
+    $handlerData = $route->handler;
+    ...
+    //se trata el nuevo parametro auth
+    $needsAuth = $handlerData["auth"] ?? false;
+    $sessionUserId = $_SESSION["userId"] ?? false;
+    if($needsAuth && !$sessionUserId){
+        echo "protected route";
+    }
+
+    //authcontroller.php
+        if(\password_verify($postData["password"], $user->password)){
+            $_SESSION["userId"] = $user->id;
+            return new \Zend\Diactoros\Response\RedirectResponse("/admin");
+        }
+    //logout
+        unset($_SESSION["userId"])
+        return new RedirectResponse("/login");
+    ```
+    
 #### 11. Liberación de código/release 
 - [48 Variables de entorno 8:00 min]()
 - [49 Deploy en Heroku 6:00 min]()
