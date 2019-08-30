@@ -409,8 +409,24 @@
         - despues de la instalación vamos a "levantar" la caja base 
         - vamos al dir: **homestead**
         - `vagrant up` crea la mv si no existe (y ejecuta el provisionamiento) sino la reinicia 
-- [4 Configuración de virtual host 7:00 min]()
-
+- [4 Configuración de virtual host 7:00 min](https://platzi.com/clases/1462-php-avanzado/16206-configuracion-de-virtual-host/)
+    - De momento no podemos acceder al proyecto
+    - Configuramos el archivo **hosts**
+        - 192.168.11.10 cursophp.test 
+    - entramos en el navegador a: cursophp.test
+    - `vagrant ssh` entramos por consola a la maq virtual
+    - `cd code; ls; cd curso-introduccion-php; composer install`
+    ```js
+    //entrando a la bd
+    host:     localhost
+    username: homestead
+    password: secret
+    database: cursophp
+    ssh host: 192.168.11.10
+    ssh user: vagrant
+    ssh pass: vagrant
+    ```
+    - se crea una tabla **jobs** y ya funciona el proyecto
 #### 3 Características avanzadas del lenguaje 
 - [5 Closures 9:00 min]()
 - [6 Type Hinting 6:00 min]()
