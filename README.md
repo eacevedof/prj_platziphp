@@ -428,7 +428,22 @@
     ```
     - se crea una tabla **jobs** y ya funciona el proyecto
 #### 3 Características avanzadas del lenguaje 
-- [5 Closures 9:00 min]()
+- [5 Closures 9:00 min](https://platzi.com/clases/1462-php-avanzado/16208-closures8895/)
+    - son variables tipo funciones
+    ```php
+    $closure = function(){
+        echo "hola"
+    }
+    $closure(); //se muestra hola
+
+    $limitmonths = 15
+    $filterfn = function($job) use($limitmonths) {
+        return $job["months"] >= $limitmonths;
+    }
+
+    $jobs = array_filter($jobs->toArray(),$filterfn);
+
+    ```
 - [6 Type Hinting 6:00 min]()
 - [7 Agregar imágenes en Jobs 1:00 min]()
 - [8 Salvar imágenes en Jobs 6:00 min]()
