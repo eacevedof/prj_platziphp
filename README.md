@@ -363,7 +363,52 @@
 #### 2 Herramientas
 - [2 Herramientas IDEs 2:00 min](https://platzi.com/clases/1462-php-avanzado/16205-ides/)
     - php-storm
-- [3 Virtualización 15:00 min]()
+- [3 Virtualización 15:00 min](https://platzi.com/clases/1462-php-avanzado/16204-virtualizacion/)
+    - Vagrant y Docker
+    - Vagrant
+        - Maquinas virtuales completas
+    - Docker
+        - Pequeños contenedores que tienen instalaciones aisladas de php, mysql, apache y que tenemos que hacer que actuen en conjunto
+    - Usaremos Vagrant
+        - Vagrant trabaja sobre linux, windows o mac
+    - Laravel Homstead (proyecto creado por la comunidad laravel)
+        - [Laravel Homstead](https://laravel.com/docs/5.8/homestead)
+    - Instalamos Vagrant
+        - `vagrant -v`
+    - Instalamos laravel homstead
+        - `vagrant box add laravel/homestead`
+        - las imagenes de vagrant ya creadas se llaman box
+        - Seleccionamos la opción 3: **virtualbox**
+        - Vagrant al ser una maq. virtual necesita un motor que maneje las maquinas virtuales, en este caso **virtualbox**
+        - ... mientras se instala la imagen trabajaremos con **homstead** (un repo de git)
+        - `git clone ../laravel/homestead.git`
+        - `cd homestead`
+        - `init.bat` para windows
+            - `Homestead initialized`
+        - Esto crea un nuevo fichero de config **homestead.yaml**
+        - La maquina virtual tiene su pripia ip
+        - En el fichero **homestead.yaml**
+        ```js
+        Vamos a ligar una carpeta en la maq local y  la virtual
+        folders:
+          - map: <carpeta-local>
+            to: <carpeta-en-vagrant> /home/vagrant/code
+        sites:
+          - map: homestead.test
+            to: /home/vagrant/code/public 
+          - map: cursophp.test
+            to: /home/vagrant/code/curso-introduccion-php/public
+            //esto se hizo en el curso pasado. Para el cusrso actual hay que usar el branch 2
+        databases:
+           - homestead
+           - cursophp //agregamos esta bd            
+        ```
+        - Despues de la descarga de la imágen de vagrant
+        - `vagrant up` se creará una nueva mv con nombre **homestead-<numero>** se ejecuta un paso que se llama **aprovisionamiento**
+        - instala y/o configura todo lo que necesite para esa mv (importa la "caja" base **laravel/homestead**)
+        - despues de la instalación vamos a "levantar" la caja base 
+        - vamos al dir: **homestead**
+        - `vagrant up` crea la mv si no existe (y ejecuta el provisionamiento) sino la reinicia 
 - [4 Configuración de virtual host 7:00 min]()
 
 #### 3 Características avanzadas del lenguaje 
