@@ -358,7 +358,7 @@
 ## Parte 2: [Curso Avanzado de PHP](https://platzi.com/clases/php-avanzado/)
 
 #### 1 Introducción 
-- [1 Introducción 1:00 min]()
+- [1 Introducción 1:00 min](https://platzi.com/clases/1462-php-avanzado/16280-introduccion9360/)
 
 #### 2 Herramientas
 - [2 Herramientas IDEs 2:00 min]()
