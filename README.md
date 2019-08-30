@@ -361,7 +361,8 @@
 - [1 Introducción 1:00 min](https://platzi.com/clases/1462-php-avanzado/16280-introduccion9360/)
 
 #### 2 Herramientas
-- [2 Herramientas IDEs 2:00 min]()
+- [2 Herramientas IDEs 2:00 min](https://platzi.com/clases/1462-php-avanzado/16205-ides/)
+    - php-storm
 - [3 Virtualización 15:00 min]()
 - [4 Configuración de virtual host 7:00 min]()
 
