@@ -445,7 +445,8 @@
     ```
 - [6 Type Hinting 6:00 min](https://platzi.com/clases/1462-php-avanzado/16207-type-hinting/)
     - A partir de la version de php 7.1 existe esta caracteristica
-- [7 Agregar imágenes en Jobs 1:00 min]()
+- [7 Agregar imágenes en Jobs 1:00 min](https://www.youtube.com/watch?v=P06lOrg8Oig)
+    - document con tarea
 - [8 Salvar imágenes en Jobs 6:00 min]()
 - [9 Traits 8:00 min]()
 - [10 Endpoint to delete Jobs 9:00 min]()
