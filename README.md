@@ -447,7 +447,34 @@
     - A partir de la version de php 7.1 existe esta caracteristica
 - [7 Agregar imágenes en Jobs 1:00 min](https://www.youtube.com/watch?v=P06lOrg8Oig)
     - document con tarea
-- [8 Salvar imágenes en Jobs 6:00 min]()
+- [8 Salvar imágenes en Jobs 6:00 min](https://platzi.com/clases/1462-php-avanzado/16209-salvar-imagenes-en-jobs/)
+    - Se aplica herencia simple
+    - Uso de Traits (existen también en Ruby)
+    - Se agrega columna **image** tipo texto
+    - [/app/Controllers/JobsController.php](https://github.com/eacevedof/prj_platziphp/blob/master/app/Controllers/JobsController.php)
+    ```php
+    use Respect\Validation\Validator as v;
+    ...
+    if ($request->getMethod() == 'POST') {
+        $postData = $request->getParsedBody();
+        $jobValidator = v::key('title', v::stringType()->notEmpty())
+                ->key('description', v::stringType()->notEmpty());
+        try {
+            $jobValidator->assert($postData);
+            $postData = $request->getParsedBody();
+            $files = $request->getUploadedFiles();
+            $logo = $files['logo'];
+            if($logo->getError() == UPLOAD_ERR_OK) {
+                $fileName = $logo->getClientFilename();
+                $fullPath = "uploads/$fileName";
+                $logo->moveTo($fullPath);
+            }
+            $job = new Job();
+            $job->title = $postData['title'];
+            $job->description = $postData['description'];
+            $job->image = $fullPath;
+            $job->save();
+    ```
 - [9 Traits 8:00 min]()
 - [10 Endpoint to delete Jobs 9:00 min]()
 - [11 Third party Traits - Soft Delete 6:00 min]()
