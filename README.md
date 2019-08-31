@@ -487,7 +487,11 @@
     ```
     - Interesante función **compac('nombre_var_definida')**
         - hace un tipo de explode devolviendo un array tipo `["nombre_var_definida"=>$nombre_var_definida]`
-- [11 Third party Traits - Soft Delete 6:00 min]()
+- [11 Third party Traits - Soft Delete 6:00 min](https://platzi.com/clases/1462-php-avanzado/16212-third-party-traits-soft-delete/)
+    - Soft delete (borrado lógico)
+    - [Eloquent - Soft Deleting](https://laravel.com/docs/5.8/eloquent#soft-deleting)
+    - Método **obj::withTrashed()->where(..)->get()**
+        - Devuelve todo incluso lo que se ha borrado por flag
 
 #### 4 Técnicas de programación 
 - [12 SOLID 4:00 min]()
