@@ -477,7 +477,16 @@
     ```
 - [9 Traits 8:00 min](https://platzi.com/clases/1462-php-avanzado/16210-traits6325/)
     - [app/Traits/HasDefaultImage.php](https://github.com/eacevedof/prj_platziphp/blob/master/app/Traits/HasDefaultImage.php)
-- [10 Endpoint to delete Jobs 9:00 min]()
+- [10 Endpoint to delete Jobs 9:00 min](https://platzi.com/clases/1462-php-avanzado/16211-endpoint-to-delete-jobs/)
+    - Borrado fisico
+    ```php
+    public function deleteAction(ServerRequest $request) {
+        $this->jobService->deleteJob($request->getAttribute('id'));
+        return new RedirectResponse('/jobs');
+    }
+    ```
+    - Interesante función **compac('nombre_var_definida')**
+        - hace un tipo de explode devolviendo un array tipo `["nombre_var_definida"=>$nombre_var_definida]`
 - [11 Third party Traits - Soft Delete 6:00 min]()
 
 #### 4 Técnicas de programación 
