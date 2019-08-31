@@ -650,9 +650,12 @@
             parent::__construct();
             $this->jobService = $jobService;
         }
+    //esto daría eror ya que en ningún momento estamos pasando al constructor (desde el frontcontroller)
+    //una instancia de JobService
     ```
+- [15 Contenedor de inyección de dependencias 8:00 min](https://platzi.com/clases/1462-php-avanzado/16216-contenedor-de-inyeccion-de-dependencias/)
+    - 
 
-- [15 Contenedor de inyección de dependencias 8:00 min]()
 - [16 Middlewares y PSR15 15:00 min]()
 - [17 Implementando el server request handler 11:00 min]()
 - [18 Creando un middleware 14:00 min]()
