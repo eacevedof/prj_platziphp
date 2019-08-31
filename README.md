@@ -494,7 +494,51 @@
         - Devuelve todo incluso lo que se ha borrado por flag
 
 #### 4 Técnicas de programación 
-- [12 SOLID 4:00 min]()
+- [12 SOLID 4:00 min](https://platzi.com/clases/1462-php-avanzado/16214-solid/)
+    - Principios de Robert C. Martin
+        - ![Solid - Robert C. Martin](https://upload.wikimedia.org/wikipedia/commons/thumb/e/ee/Robert_Cecil_Martin.png/330px-Robert_Cecil_Martin.png)
+    - 1 Responsabilidad única (**S**ingle responsability)
+        - Ejemplo dos responsabilidades:
+            - Clase que lee una tabla de la base de datos y pinta un html
+            - Podría acarrear el problema de que si se modifica la parte de renderizado y por esto ocurra un error, la clase deje de operar correctamente en la consulta a la bd.
+    - 2 Abierto - Cerrado (**O**pen - closed) 
+        - Clases abiertas a la extensión 
+        - Cerradas a la modificación
+        - Que las clases esten preparadas para ser hereadas y que si se tiene que usar una funcionalidad concreta no acarree modificar la clase padre. Esto se puede llevar acabo con interfaces o inyección de dependencias
+    - 3 Sustitución de Liskof (**L**iskov substitution principle)
+        - Si tengo una clase padre que la estoy usando en distintos puntos de mi app debería poder substituirla por cualquiera de sus hijas sin crear ningún conflicto
+        - Es decir, las clases hijas deben implementar todo los métodos públicos de la clase padre
+    - 4 Segregación de interfaces (**I**nterface segregation principle)
+        - Supongamos que tenemos una interfaz que **clona** y **copia**
+        - Tenemos un objeto que solo necesita clonar o copiar
+        - Estos objetos estarían implementando una interfaz que haría ambas cosas
+        - En este caso deberiamos tener dos interfaces: 
+            - **IClone** 
+            - **ICopy**
+        ```php
+        interface IClone {}
+        interface ICopy {}
+        ...
+        class Cloner implements IClone {}
+        class Copier implements ICopy {}
+        class Mixed implements IClone, ICopy {}
+        ```
+    - 5 Inversión de dependencias (**D**ependency inversion principle)
+        - Trata de desacoplar el código
+        - Cuando tienes una clase donde haces instancia de otra clase:
+            ```php
+            //ejemplo de acople permanente
+            class A {
+                private $oB;
+                public function __construct(){
+                    $this->oB = new B();
+                }
+            }
+            ```
+        - Si quisieramos extender **A** substituyendo **`$this->oB`** por otra clase no podríamos
+        - Con la inyección de dependencias se agregarían (o inyectarían) desde otra forma
+        - Como se haría esto? **siguiente clase :)**
+        - > La **inyección** de dependencias es una parte fundamental de la **inversión** de dependencias
 - [13 SOLID a profundidad 3:00 min]()
 - [14 Inyección de dependencias 9:00 min]()
 - [15 Contenedor de inyección de dependencias 8:00 min]()
