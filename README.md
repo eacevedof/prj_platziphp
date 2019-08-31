@@ -475,7 +475,8 @@
             $job->image = $fullPath;
             $job->save();
     ```
-- [9 Traits 8:00 min]()
+- [9 Traits 8:00 min](https://platzi.com/clases/1462-php-avanzado/16210-traits6325/)
+    - [app/Traits/HasDefaultImage.php](https://github.com/eacevedof/prj_platziphp/blob/master/app/Traits/HasDefaultImage.php)
 - [10 Endpoint to delete Jobs 9:00 min]()
 - [11 Third party Traits - Soft Delete 6:00 min]()
 
