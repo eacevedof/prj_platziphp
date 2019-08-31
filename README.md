@@ -634,7 +634,24 @@
     }//Reporter
     ```
     - Duda, `ExpensesRepository $repo,` esto no tendría que ser una inyección de interfaz?
-- [14 Inyección de dependencias 9:00 min]()
+- [14 Inyección de dependencias 9:00 min](https://platzi.com/clases/1462-php-avanzado/16215-inyeccion-de-dependencias6997/)
+    - Se usa en varios frameworks
+    - Al tener tanto código en los controladores si se desea reutiliza el código habría que duplicarlo
+    - Entra la figura de **Services**
+    - [app/Services/JobService.php](https://github.com/eacevedof/prj_platziphp/blob/master/app/Services/JobService.php)
+        - con método `public function deleteJob($id) {`
+    ```php
+    //en lugar de construir el jobService en deleteAction vamos a aplicar la inyección de dependencias
+    //para esto se usa una variable privada y se retoca el __construct()
+    class JobsController extends BaseController {
+        private $jobService;
+        public function __construct(JobService $jobService)
+        {
+            parent::__construct();
+            $this->jobService = $jobService;
+        }
+    ```
+
 - [15 Contenedor de inyección de dependencias 8:00 min]()
 - [16 Middlewares y PSR15 15:00 min]()
 - [17 Implementando el server request handler 11:00 min]()
