@@ -540,7 +540,100 @@
         - Con la inyección de dependencias se agregarían (o inyectarían) desde otra forma
         - Como se haría esto? **siguiente clase :)**
         - > La **inyección** de dependencias es una parte fundamental de la **inversión** de dependencias
-- [13 SOLID a profundidad 3:00 min]()
+- [13 SOLID a profundidad 3:00 min](https://platzi.com/clases/1462-php-avanzado/16234-solid-a-profundidad5654/)
+    - Lectura 
+    ```php
+    //v1
+    //código acoplado y multifunción
+    class Reporter 
+    {
+        public function getExpensesReport($idReport) {
+            $expenses = $this->queryDBToGetExpenses($idReport);
+            return $this->renderHTML($expenses);
+        }
+        … // El código de las funciones va aquí
+    }
+    
+    //v2
+    //Aplicamos Responsabilidad única
+    //no estariamos cumpliendo con la inversión de dependencias por Reporter::__construct()
+    class ExpensesRepository {
+        public function getExpensesForReport() {...}
+    }//ExpensesRepository
+
+    class ExpensesReportHTMLFormatter {
+        public function renderHTML($expenses) {...}
+    }//ExpensesReportHTMLFormatter
+
+    class Reporter {
+        private $repository;
+        private $formatter;
+
+        public function __construct() {
+            $this->repository = new ExpensesRepository();
+            $this->formatter = new ExpensesReportHTMLFormatter();
+        }
+
+        public function getExpensesReport($idReport) {
+            $expenses = $this->repository->getExpensesForReport($idReport);
+            return $this->formatter->renderHTML($expenses);
+        }
+    }//Reporter
+
+    //v3 
+    //Se inverte el control de las dependencias
+    //de ser instanciadas en el cuerpo de __construct se inverte y se inyecta como parámetros
+    class Reporter {
+        private $repository;
+        private $formatter;
+
+        //inyeccion de dependencias
+        public function __construct(ExpensesRepository $repo, ExpensesReportHTMLFormatter $formatter) {
+            $this->repository = $repo;
+            $this->formatter = $formatter;
+        }
+
+        public function getExpensesReport($idReport) {
+            $expenses = $this->repository->getExpensesForReport($idReport);
+            return $this->formatter->renderHTML($expenses);
+        }    
+    }//Reporter
+
+    //v4
+    //Esto no resuelve el poder regresar los valores usando otro formato
+    //aplicamos la otra premisa de la inversion de dependencias que es: no depender de clases sino de abstracciones
+    interface ExpensesReportFormatterInterface {
+	    public function render($expenses);
+    }
+    
+    class ExpensesReportHTMLFormatter implements ExpensesReportFormatterInterface {
+        public function render($expenses) {...}
+    }    
+
+    class ExpensesReportJSONFormatter implements ExpensesReportFormatterInterface {
+        public function render($expenses) {...}
+    }
+       
+    class Reporter {
+        private $repository;
+        private $formatter;
+
+        public function __construct(
+            ExpensesRepository $repo, 
+            //el formatter ahora puede ser Json o Html
+            ExpensesReportFormatterInterface $oIFormatter) 
+        {
+            $this->repository = $repo;
+            $this->formatter = $oIFormatter;
+        }
+
+        public function getExpensesReport($idReport) {
+            $expenses = $this->repository->getExpensesForReport($idReport);
+            return $this->formatter->render($expenses);
+        }
+    }//Reporter
+    ```
+    - Duda, `ExpensesRepository $repo,` esto no tendría que ser una inyección de interfaz?
 - [14 Inyección de dependencias 9:00 min]()
 - [15 Contenedor de inyección de dependencias 8:00 min]()
 - [16 Middlewares y PSR15 15:00 min]()
