@@ -687,8 +687,6 @@
     //el inyector detecta, para el caso de JobsController, que necesita JobsService entonces lo inyecta
     $controller = $oInjectContainer->get($controllerName);
     ```
-
-
 - [16 Middlewares y PSR15 15:00 min]()
 - [17 Implementando el server request handler 11:00 min]()
 - [18 Creando un middleware 14:00 min]()
