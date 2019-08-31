@@ -371,16 +371,17 @@
         - Pequeños contenedores que tienen instalaciones aisladas de php, mysql, apache y que tenemos que hacer que actuen en conjunto
     - Usaremos Vagrant
         - Vagrant trabaja sobre linux, windows o mac
-    - Laravel Homstead (proyecto creado por la comunidad laravel)
-        - [Laravel Homstead](https://laravel.com/docs/5.8/homestead)
+    - Laravel Homestead (proyecto creado por la comunidad laravel)
+        - [Laravel Homestead](https://laravel.com/docs/5.8/homestead)
+        - Homestead = Granja
     - Instalamos Vagrant
         - `vagrant -v`
-    - Instalamos laravel homstead
+    - Instalamos laravel homestead
         - `vagrant box add laravel/homestead`
         - las imagenes de vagrant ya creadas se llaman box
         - Seleccionamos la opción 3: **virtualbox**
         - Vagrant al ser una maq. virtual necesita un motor que maneje las maquinas virtuales, en este caso **virtualbox**
-        - ... mientras se instala la imagen trabajaremos con **homstead** (un repo de git)
+        - ... mientras se instala la imagen trabajaremos con **homestead** (un repo de git)
         - `git clone ../laravel/homestead.git`
         - `cd homestead`
         - `init.bat` para windows
@@ -654,7 +655,39 @@
     //una instancia de JobService
     ```
 - [15 Contenedor de inyección de dependencias 8:00 min](https://platzi.com/clases/1462-php-avanzado/16216-contenedor-de-inyeccion-de-dependencias/)
-    - 
+    ```php
+    //podriamos hacer esto en el frontcontroller
+    if($controllerName == "App\Controller\JobsController")
+        $controller = new $controllerName(new \App\Services\JobsServices())
+    else
+        $controller = new $controllerName
+    
+    //esto no es muy robusto
+    //que pasaría si JobsServices también necesitaría un parámetro?
+    ```
+    - Existen patrones de diseño que estan pensados para solucionar problemas de este estilo
+    - El patrón **factory** por ejemplo
+    - **abstractfactory** que permitiría crear diferentes tipos de objetos
+    - Vamos a implementar un **contenedor** de inyección de dependencias que se encargará de esta tarea
+    - Revisará las dependencias implicadas y las agregará al código
+    - usaremos [composer require php-di/php-di](https://packagist.org/packages/php-di/php-di)
+    - Nos apoyaremos en el **typehinting** para que el paquete sepa que es lo que tiene que inyectar **autowriting**
+    - Inicialmente esta solución está bien, pero si se desea desacoplar más se podría usar **clases abstractas** y para eso si habría que definir ciertas **reglas de configuración** **expresive configuration** para explicarle a contenedor que:
+    - > ...en esta clase que depende de esta clase abstracta quieres que se introduzca una clase hija concreta
+    - homestead ya viene con composer incluido 
+    ```php
+    //creando el contenedor
+    $oInjectContainer = new DI\Container();
+    //si desearamos agregar reglas de configuración lo hariamos usando \Di\ContainerBuilder();
+    $oInjectBuilder = new Di\ContainerBuilder();
+    $oInjectBuilder->...
+    $oInjectContainer = $oInjectBuilder->build();
+    ...
+    //en index.php (frontcontroller)
+    //el inyector detecta, para el caso de JobsController, que necesita JobsService entonces lo inyecta
+    $controller = $oInjectContainer->get($controllerName);
+    ```
+
 
 - [16 Middlewares y PSR15 15:00 min]()
 - [17 Implementando el server request handler 11:00 min]()
