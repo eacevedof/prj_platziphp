@@ -536,6 +536,7 @@
             }
             ```
         - Si quisieramos extender **A** substituyendo **`$this->oB`** por otra clase no podríamos
+            - `$this->oB = new C()` para esto habría que modificar el construct de **A**
         - Con la inyección de dependencias se agregarían (o inyectarían) desde otra forma
         - Como se haría esto? **siguiente clase :)**
         - > La **inyección** de dependencias es una parte fundamental de la **inversión** de dependencias
