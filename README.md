@@ -775,7 +775,7 @@
         ->addMiddleware(new HttpHandlerRunnerMiddleware(new SapiEmitter()))
         //En lugar de FastRouteMiddleware tenemos Aura\Router
         //->addMiddleware(new FastRouteMiddleware($router))
-        ->addMiddleware(new (Middlewares\AuraRouter($routerContainer)))
+        ->addMiddleware(new Middlewares\AuraRouter($routerContainer))
         //tenemos que importar este DispatcherMiddleware
         ->addMiddleware(new DispatcherMiddleware())
         ->run();
@@ -850,7 +850,61 @@
         - Envia los encabezados
         - Envía el estado de la respuesta
         - Envía el el cuerpo
-- [18 Creando un middleware 14:00 min]()
+- [18 Creando un middleware 14:00 min](https://platzi.com/clases/1462-php-avanzado/16283-creando-un-middleware8452/)
+    - Se crea una carpeta middlewares
+    - Clase: **AuthenticationMiddleware**
+    - Para que nuestro middleware funcione sobre **PSR-15 HTTP Server Request Handlers** debemos implenetar la interfaz correspondiente
+    - [AuthenticationMiddleware.php](https://github.com/eacevedof/prj_platziphp/blob/master/app/Middlewares/AuthenticationMiddleware.php)
+    - El **RequestHandlerInterface** gestionará la ejecución en Pipeline, lanzará el **next**
+    - El middleware puede usarse antes o despues de la capa de la aplicación
+    - No podemos colocarlo antes del
+    ```php
+    namespace App\Middlewares;
+
+    use Psr\Http\Server\MiddlewareInterface;    //interfaz middleware
+    use Psr\Http\Message\ServerRequestInterface;//interfaz request
+    use Psr\Http\Server\RequestHandlerInterface;//interfaz request handler (psr-15)
+    use Psr\Http\Message\ResponseInterface;     //interfaz response
+
+    //implementa ResponseInterface
+    use Zend\Diactoros\Response\EmptyResponse;  //respuesta vacia con status
+
+    class AuthenticationMiddleware implements MiddlewareInterface
+    {
+        /**
+        * Process an incoming server request.
+        * Processes an incoming server request in order to produce a response.
+        * If unable to produce the response itself, it may delegate to the provided
+        * request handler to do so.
+        * @param ServerRequestInterface $request
+        * @param RequestHandlerInterface $handler
+        * @param ResponseInterface
+        */
+        public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
+        {
+            if (substr($request->getUri()->getPath(), 0, 6) === '/admin') {
+                $sessionUserId = $_SESSION['userId'] ?? null;
+                if (!$sessionUserId) {
+                    //acaba el pipeline
+                    return new EmptyResponse(401);
+                }
+            }
+            //llama al siguiente middleware
+            return $handler->handle($request);
+        }//process
+
+    }//class AuthenticationMiddleware
+
+    //en index.php
+    $harmony = new Harmony($request, new Response());
+    $harmony
+        //este, el SapiEmitter es el que devuelve la respuesta final, antes de este no puede ir ninguno
+        ->addMiddleware(new HttpHandlerRunnerMiddleware(new SapiEmitter()))
+        ->addMiddleware(new Middlewares\AuraRouter($routerContainer))  //comprueba si la ruta existe
+        ->addMiddleware(new \App\Middlewares\AuthenticationMiddleware()) //comprueba si ha usuario en sesion
+        ->addMiddleware(new DispatcherMiddleware($container,"request-handler"))
+        ->run();    
+    ```
 
 #### 5 Errores y debug 
 - [19 Error Handling 13:00 min]()
