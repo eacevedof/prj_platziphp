@@ -722,7 +722,7 @@
     - **harmony** recomienda usar: 
         - **nikic/fast-route** Permite usar el enrutador de middleware por defecto
         - **zendframework/zend-httphadlerrunner** Permite usar el middleware emisor por defecto de respuestas HTTP 
-        - Nosotros usamos **aura-router** en lugar de fast-route que al cumplir con el psr son compatibles, es decir, se puede sustituir uno por otro.
+        - Nosotros usamos **aura-router** en lugar de fast-route ~~que al cumplir con el psr son compatibles, es decir, se puede sustituir uno por otro.~~
     - Instalación del SapiEmitter: `composer require zendframework/zend-httphandlerrunner`
         - `use Zend\HttpHandlerRunner\Emitter\SapiEmitter`
         - Este ejecuta una **RequestHandlerInterface** y emite respuestas generadas por la petición
