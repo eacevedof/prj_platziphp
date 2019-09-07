@@ -722,12 +722,12 @@
     - **harmony** recomienda usar: 
         - **nikic/fast-route** Permite usar el enrutador de middleware por defecto
         - **zendframework/zend-httphadlerrunner** Permite usar el middleware emisor por defecto de respuestas HTTP 
-        - Nosotros usamos **aura-router** en lugar de fast-route ~~que al cumplir con el psr son compatibles, es decir, se puede sustituir uno por otro.~~
+        - Nosotros usamos **Aura\Router** en lugar de fast-route ~~que al cumplir con el psr son compatibles, es decir, se puede sustituir uno por otro.~~
     - Instalación del SapiEmitter: `composer require zendframework/zend-httphandlerrunner`
         - `use Zend\HttpHandlerRunner\Emitter\SapiEmitter`
         - Este ejecuta una **RequestHandlerInterface** y emite respuestas generadas por la petición
-    - Hay un problema con AuraRouter ya que no es compatible con psr7 y 15
-    - Hay que instalar un wrapper (adpater) para que haga Aurarouter compatible
+    - Hay un problema con AuraRouter ya que no es compatible con psr15 (si lo es con **psr7 Http Message Interface**)
+    - Hay que instalar un wrapper (adpater) para que haga **Aura\Router** compatible con **psr15 HTTP Server Request Handlers**
     - Instalamos un middleware wrapper: `composer require middlewares/aura-router`
         - [Repo Middlewares](https://github.com/middlewares)
         - Dependencias:
@@ -773,7 +773,7 @@
         //lo mismo con SapiEmitter. SappiEmiter está en zendframework/zend-httphandlerrunner
         //es un middleware que va a emitir la respuesta
         ->addMiddleware(new HttpHandlerRunnerMiddleware(new SapiEmitter()))
-        //En lugar de FastRouteMiddleware tenemos aurarouter
+        //En lugar de FastRouteMiddleware tenemos Aura\Router
         //->addMiddleware(new FastRouteMiddleware($router))
         ->addMiddleware(new (Middlewares\AuraRouter($routerContainer)))
         //tenemos que importar este DispatcherMiddleware
