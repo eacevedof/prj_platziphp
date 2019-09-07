@@ -687,7 +687,103 @@
     //el inyector detecta, para el caso de JobsController, que necesita JobsService entonces lo inyecta
     $controller = $oInjectContainer->get($controllerName);
     ```
-- [16 Middlewares y PSR15 15:00 min]()
+- [16 Middlewares y PSR15 15:00 min](https://platzi.com/clases/1462-php-avanzado/16281-middlewares-y-psr157700/)
+    - [www.php-fig.org/psr/psr-15/][https://www.php-fig.org/psr/psr-15/]
+    - ![psr15 - Middlewares](https://trello-attachments.s3.amazonaws.com/5d7383cbd9f3313700b066f2/1154x809/2977c884986fd7afae1962fb0540dbb0/image.png)
+    - ![psr15 - phpfig](https://trello-attachments.s3.amazonaws.com/5d7383cbd9f3313700b066f2/1045x100/ff90d39e0eb83ba50da78d080ec86872/image.png)
+    - Se pueden ver como filtros en los cuales se puede inyectar cierta funcionalidad de modo que una petición pase al core de la app si y solo sí ha cumplido ciertas reglas
+    - Por ejemplo, aqui se podría ejecutar:
+        - La autenticación
+        - Revisión de permisos
+        - Revisar si es una llamada desde una API o una app
+    - Con los ejemplos anteriores, si en la primera capa no se cumple algúna de estas se delega la respuesta a otro punto fuera de nuestro core
+    - Ya se tiene una forma de gestionar la respuesta con el ServerRequestHandler, se cambiará para que se pueda implementar los middlewares
+    ```php
+    //index.php (frontcontroller)
+    ...
+    //esta parte del código es lo que se define como el server request handler
+    $response = $controller->$actionName($request);
+    foreach($response->getHeaders() as $name=>$values)
+    {
+        foreach($values as $value){
+            header(sprintf("%s: %s", $name, $value), );
+        }
+    }
+    http_response_code($response->getStatusCode());
+    echo $response->getBody();
+    ```
+    - **Harmony** was born to be a totally flexible and almost invisible framework for your application.
+    - Harmony fomenta que se trabaje con ciertas funcionalidades concretas de los frameworks y no con todo el framework. [Leer: Frameworks dont make sense](https://catonmat.net/frameworks-dont-make-sense)
+    - Instalación de **harmony** `composer require woohoolabs/harmony`
+    - Siempre que trabajemos con librerias PSR estas ofrecen las interfaces que cumplen con el standard
+    - En el caso de **harmony** tiene dependencias de:
+        - **psr/http-server-handler**
+        - **psr/http-server-middleware**
+    - **harmony** recomienda usar: 
+        - **nikic/fast-route** Permite usar el enrutador de middleware por defecto
+        - **zendframework/zend-httphadlerrunner** Permite usar el middleware emisor por defecto de respuestas HTTP 
+        - Nosotros usamos **aura-router** en lugar de fast-route que al cumplir con el psr son compatibles, es decir, se puede sustituir uno por otro.
+    - Instalación del SapiEmitter: `composer require zendframework/zend-httphandlerrunner`
+        - `use Zend\HttpHandlerRunner\Emitter\SapiEmitter`
+        - Este ejecuta una **RequestHandlerInterface** y emite respuestas generadas por la petición
+    - Hay un problema con AuraRouter ya que no es compatible con psr7 y 15
+    - Hay que instalar un wrapper (adpater) para que haga Aurarouter compatible
+    - Instalamos un middleware wrapper: `composer require middlewares/aura-router`
+        - [Repo Middlewares](https://github.com/middlewares)
+        - Dependencias:
+        - `psr/http-factory`
+        - `middlewares/utils`
+        - `middlewares/aura-router`
+    - 
+
+    ```php
+    //ejemplo en https://packagist.org/packages/woohoolabs/harmony
+    use WoohooLabs\Harmony\Harmony;
+    use WoohooLabs\Harmony\Middleware\FastRouteMiddleware; //usamos aura
+    use WoohooLabs\Harmony\Middleware\DispatcherMiddleware;
+    use WoohooLabs\Harmony\Middleware\HttpHandlerRunnerMiddleware;
+    use Zend\Diactoros\ServerRequestFactory;
+    use Zend\Diactoros\Response;
+    use Zend\HttpHandlerRunner\Emitter\SapiEmitter;
+
+    $harmony = new Harmony(ServerRequestFactory::fromGlobals(), new Response());
+    $harmony
+        ->addMiddleware(new HttpHandlerRunnerMiddleware(new SapiEmitter()))
+        ->addMiddleware(new FastRouteMiddleware($router))
+        ->addMiddleware(new DispatcherMiddleware())
+        ->run();
+    ```
+    - Refactor del **server request handler** usando **Harmony**
+    ```php
+    //el código anterior (server request handler) se refactoriza así:
+    //index.php (frontcontroller)
+    ...
+    use Aura\Router\RouterContainer;
+
+    //el request que ya tenemos
+    $request = Zend\Diatoros\ServerRequestFactory:.fromG...(...);
+
+    $routeContainer = new RouterContainer();
+    $map = $routerContainer->getMap();
+    $map->get(...);
+    $map->get(..:);
+    ....
+
+    $harmony = new Harmony($request, new Response());
+    $harmony
+        //el HttpHandlerRunnerMiddleware no lo tenemos en "use" hay que agregarlo
+        //lo mismo con SapiEmitter. SappiEmiter está en zendframework/zend-httphandlerrunner
+        //es un middleware que va a emitir la respuesta
+        ->addMiddleware(new HttpHandlerRunnerMiddleware(new SapiEmitter()))
+        //En lugar de FastRouteMiddleware tenemos aurarouter
+        //->addMiddleware(new FastRouteMiddleware($router))
+        ->addMiddleware(new (Middlewares\AuraRouter($routerContainer)))
+        //tenemos que importar este DispatcherMiddleware
+        ->addMiddleware(new DispatcherMiddleware())
+        ->run();
+    ```
+    - En este punto el refactor da un error en el **DispatcherMiddleware()** ya que no comprende los parámtros de los **$map**. Se resolverá en el prox capítulo
+
 - [17 Implementando el server request handler 11:00 min]()
 - [18 Creando un middleware 14:00 min]()
 
