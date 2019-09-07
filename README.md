@@ -688,7 +688,7 @@
     $controller = $oInjectContainer->get($controllerName);
     ```
 - [16 Middlewares y PSR15 15:00 min](https://platzi.com/clases/1462-php-avanzado/16281-middlewares-y-psr157700/)
-    - [www.php-fig.org/psr/psr-15/][https://www.php-fig.org/psr/psr-15/]
+    - [www.php-fig.org/psr/psr-15/](https://www.php-fig.org/psr/psr-15/)
     - ![psr15 - Middlewares](https://trello-attachments.s3.amazonaws.com/5d7383cbd9f3313700b066f2/1154x809/2977c884986fd7afae1962fb0540dbb0/image.png)
     - ![psr15 - phpfig](https://trello-attachments.s3.amazonaws.com/5d7383cbd9f3313700b066f2/1045x100/ff90d39e0eb83ba50da78d080ec86872/image.png)
     - Se pueden ver como filtros en los cuales se puede inyectar cierta funcionalidad de modo que una petición pase al core de la app si y solo sí ha cumplido ciertas reglas
@@ -734,8 +734,6 @@
         - `psr/http-factory`
         - `middlewares/utils`
         - `middlewares/aura-router`
-    - 
-
     ```php
     //ejemplo en https://packagist.org/packages/woohoolabs/harmony
     use WoohooLabs\Harmony\Harmony;
@@ -783,8 +781,8 @@
         ->run();
     ```
     - En este punto el refactor da un error en el **DispatcherMiddleware()** ya que no comprende los parámtros de los **$map**. Se resolverá en el prox capítulo
-
-- [17 Implementando el server request handler 11:00 min]()
+- [17 Implementando el server request handler 11:00 min](https://platzi.com/clases/1462-php-avanzado/16282-implementando-el-server-request-handler7049/)
+    - 
 - [18 Creando un middleware 14:00 min]()
 
 #### 5 Errores y debug 
