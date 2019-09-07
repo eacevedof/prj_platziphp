@@ -779,10 +779,77 @@
         //tenemos que importar este DispatcherMiddleware
         ->addMiddleware(new DispatcherMiddleware())
         ->run();
+    /*
+    $response = $controller->$actionName($request);
+    foreach($response->getHeaders() as $name=>$values)
+    {
+        foreach($values as $value){
+            header(sprintf("%s: %s", $name, $value), );
+        }
+    }
+    http_response_code($response->getStatusCode());
+    echo $response->getBody(); 
+    */
     ```
     - En este punto el refactor da un error en el **DispatcherMiddleware()** ya que no comprende los parámtros de los **$map**. Se resolverá en el prox capítulo
 - [17 Implementando el server request handler 11:00 min](https://platzi.com/clases/1462-php-avanzado/16282-implementando-el-server-request-handler7049/)
-    - 
+    - Revisamos el código fuente de **DispatcherMiddleware** y ponemos trazas para ver como trata el **request-handler**
+    - El problema está que en el constructor hay que pasar como segundo parámetro un string "action" y no un array request-handler
+    ```php
+    //index.php
+    ...
+    //contenedor de inyección de dependencias
+    $container = new DI\Container();
+    ...
+    //originalmente se tiene configurada la ruta así:
+    $map->get("index","/",["controller"=>"App\Controller\IndexController","action"=>"indexAction"]);
+    //DispatcherMiddleware espera algo como (que no sea asociativo):
+    $map->get("index","/",["App\Controller\IndexController","indexAction"]);
+    ...
+    //todo esto ya no se va a usar porque se gestiona ahora con los middlewares
+    //$handlerData = $route->handler;
+    //$controllerName = $handlerData["controller"];
+    //$actionName = $handlerData["action"]; 
+    //$needsAuth = $handlerData["auth"] ?? false;
+
+    //$sessionUserId = $_SESSION["userId"] ?? null;
+    //if($needsAuth && !$sessionUserId){
+    //    echo "Protected route";
+    //    die;
+    //}
+
+    $harmony = new H...
+    ...
+        //DispatcherMiddleware(oContInyeccionDependencias, accion)
+        //->addMiddleware(new DispatcherMiddleware())
+        ->addMiddleware(new DispatcherMiddleware($container,"request-handler"))
+        ->run();
+
+    /*
+    $response = $controller->$actionName($request);
+    //envia los encabezados
+    foreach($response->getHeaders() as $name=>$values)
+    {
+        foreach($values as $value){
+            header(sprintf("%s: %s", $name, $value), );
+        }
+    }
+    http_response_code($response->getStatusCode()); //envia el estado 
+    echo $response->getBody();  //envía el cuerpo
+    */
+    ```
+    - Tip: `is_callable($action)` detecta si es un closure
+    - Ya no controlamos:
+        - como se envia la respuesta
+        - como se hace el dispatcher: `new Controller(..)`
+        - como se detecta el controlador y la acción
+    - El **DispatcherMiddleware** llamará el controlador y la acción
+    - El **SapiEmitter**:
+        - tiene un método principal: **public function emit(ResponseInterface $response):bool**
+        - Verifica que no haya una salida (un echo u output x)
+        - Envia los encabezados
+        - Envía el estado de la respuesta
+        - Envía el el cuerpo
 - [18 Creando un middleware 14:00 min]()
 
 #### 5 Errores y debug 
