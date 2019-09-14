@@ -1091,8 +1091,30 @@ Revisa la documentación oficial de SPL donde además de la forma de uso, tambi�
 
 #### 6 Databases 
 - [25 Migraciones de bases de datos 14:00 min](https://platzi.com/clases/1462-php-avanzado/16289-migraciones-de-bases-de-datos5955/)
-    - 
-
+    - Instalaremos el paquete de migraciones **phinx**
+    - `composer require robmorgan/phinx`
+    - desde linea de comando: `vendor/bin/phinx`
+    - `vendor/bin/phinx init .`  crea un archivo nuevo phinx.yml
+    - en phinx.yml se configuraran las carpetas y las bases de datos
+    - creamos las carpetas:
+        - /db
+        -   /migrations
+        -   /seeds
+    - `vendor/bin/phinx create CreateJobsTable` debe ser un nombre descriptivo
+    - se creará un fichero: `/db/migrations/<timestamp>_crate_jobs_table.php`
+    - configuramos la creación de una tabla
+    - en el fichero anterior, en el metodo change():
+    ```php
+    $table = $this->table("jobs");
+    $table->addColumn("title","string")
+        ->addColumn("descripton","string")
+        ...
+        ->addColumn("updated_at","datetime")
+    ```
+    - se creará una tabla phinxlog que llevará un registro de los cambios
+    - `vendor/bin/phinx rollback` deshara los cambios
+    - `vendor/bin/phinx migrate` volverá a crear la tabla
+    
 #### 7 Comandos y Tareas asíncronas 
 - [26 Comandos 13:00 min]()
 - [27 Formulario para contacto 8:00 min]()
