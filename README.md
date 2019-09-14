@@ -1028,7 +1028,23 @@ Revisa la documentación oficial de SPL donde además de la forma de uso, tambi�
         ->addMiddleware(new AuthenticationMiddleware())
         ->addMiddleware(new DispatcherMiddleware($container, 'request-handler'));
     ```
-- [22 Xdebug 11:00 min]()
+- [22 Xdebug 11:00 min](https://platzi.com/clases/1462-php-avanzado/16286-xdebug2974/)
+    - con info.php podemos ver si tenemos instalado xdebug
+    - ![xdebug ok](https://trello-attachments.s3.amazonaws.com/5b014dcaf4507eacfc1b4540/5d7d417df5d88b1db3750086/05c1485f8df38897ee10bdaecb6be16f/image.png)
+    - ![remote_enable](https://trello-attachments.s3.amazonaws.com/5b014dcaf4507eacfc1b4540/5d7d417df5d88b1db3750086/378f4af6c8d7faf1c89596b0a565c6bc/image.png)
+        - si se va a trabajar desde localhost no hace falta esto
+        - como se está usando homestead se asume que es otra maquina y si se necesita
+    - Necesitamos instalar un complemento que nos permitirá crear sesiones de debug **xdebug helper**
+    - En phpstorm:
+        - Preferencias
+        - Lenguajes y frameworks
+        - php > servers > en Name: Homestead, ponemos la ip del archivo de homestead.yml
+        - Use path mappings (le decimos cual es la raiz)
+        - aplicamos cambios
+        - habilitamos en chrome el boton de xdebug
+        - Ejecutamos la escucha de xdebug ![escuchar xdebug](https://trello-attachments.s3.amazonaws.com/5d7d417df5d88b1db3750086/197x123/e7d1d1732a56c0a1cf53d9cb913c57a8/image.png)
+        - configuramos breakpoints
+        - hay que configurar en path mappings con la ruta de homestead para que sepa (phpstorm) donde instanciar las clases
 - [23 Logs 12:00 min]()
 - [24 Trabajando con Monolog 7:00 min]()
 
