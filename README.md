@@ -1054,7 +1054,8 @@ Revisa la documentación oficial de SPL donde además de la forma de uso, tambi�
     use Monolog\Logger;
     use Monolog\Handler\StreamHandler;
 
-    $log = new Logger("app");
+    //app sería como el nombre del servidor
+    $log = new Logger("app"); //la linea de escritura será: [y-m-d HH:i:s] <name>.<logger::constant>
     $log->pushHandler(new StreamHandler(__DIR__."/../logs/app.log", Logger::WARNING));
     ```
     - se agrega un **.gitignore** dentro de la carpeta de logs
@@ -1063,7 +1064,30 @@ Revisa la documentación oficial de SPL donde además de la forma de uso, tambi�
         - *
         - !.gitignore
     
-- [24 Trabajando con Monolog 7:00 min]()
+- [24 Trabajando con Monolog 7:00 min](https://platzi.com/clases/1462-php-avanzado/16288-trabajando-con-monolog9231/)
+    ```php
+    //index.php
+    //tratamos getenv("DEBUG") 
+    if(getenv("DEBUG") === "true")
+    {
+        ini_set("display_errors",1);
+        ini_set("display_startup_error",1);
+        error_reporting(E_ALL):
+    }
+
+    catch(Exception $oEx)
+    {
+        //$log->error("this job was not found");
+        $log->warning($oEx->getMessage())
+        $emitter = new SapiEmitter();
+        $emitter->emit(new Response\EmptyResponse(400));
+    }
+    catch(Error $oErr)
+    {
+        $emitter = new SapiEmitter();
+        $emitter->emit(new Response\EmptyResponse(500));
+    }    
+    ```
 
 #### 6 Databases 
 - [25 Migraciones de bases de datos 14:00 min]()
