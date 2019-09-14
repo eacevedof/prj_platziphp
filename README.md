@@ -977,11 +977,8 @@
     - **SPL** Biblioteca estándar de PHP
     - Aqui podemos ver una lista de excepciones que podemos devolver
         - BadFunctionCallException, DomainException, LogicException, RangeException, UnderflowException ...
-    -
+- [20 La biblioteca SPL 3:00 min](https://platzi.com/clases/1462-php-avanzado/16233-la-biblioteca-spl/)
 
-
-
-- [20 La biblioteca SPL 3:00 min]()
 - [21 Debug 8:00 min]()
 - [22 Xdebug 11:00 min]()
 - [23 Logs 12:00 min]()
