@@ -978,8 +978,43 @@
     - Aqui podemos ver una lista de excepciones que podemos devolver
         - BadFunctionCallException, DomainException, LogicException, RangeException, UnderflowException ...
 - [20 La biblioteca SPL 3:00 min](https://platzi.com/clases/1462-php-avanzado/16233-la-biblioteca-spl/)
+```
+La biblioteca SPL (Standard PHP Library) es un conjunto de Clases e Interfaces para PHP que fue diseñada para ayudarnos con nuestras aplicaciones. SPL se distribuye directamente con PHP desde su versión 5.0 y aunque no es obligatorio usarla, el aprender de ella te permitirá tener un mejor código, más robusto y también más orientado a objetos.
 
-- [21 Debug 8:00 min]()
+Uno de los puntos más usados en el pasado fue la función spl_autoload_register que nos permitía indicar a nuestro código la forma en la que haríamos el autocargado de clases, obviamente esto ya no es tan usado (al menos ya no lo hacemos de forma manual) debido a que podemos solucionar el problema usando composer, pero en su momento fue una herramienta muy popular y usada dentro de las aplicaciones PHP.
+
+Además de spl_autoload_register, SPL nos ofrece otras herramientas muy interesantes para nuestro código:
+
+Iteradores
+Los iteradores sirven para recorrer conjuntos de elementos. Un iterador es un objeto que sirve para recorrer algo. En esta area SPL nos ofrece muchas clases nuevas que mejoran drásticamente la forma en la que escribimos código, entre las clases más populares nos encontramos con ArrayIterator que sirve para recorrer arreglos optimizando la memoria usada por el sistema y DirectoryIterator que nos permite recorrer los archivos y las carpetas de una ubicación.
+
+En caso de que ninguna clase cumpla con lo que queremos hacer, SPL también nos ofrece ciertas interfaces que nos permitirán mejorar la forma en la que usaremos nuestros objetos, por ejemplo podemos implementar la Interfaz Iterator si queremos que nuestro objeto pueda ser iterado o podemos implementar la interfaz ArrayAccess si queremos usar la sintaxis de acceso a elementos tipo arreglo en nuestros objetos, por ejemplo $object[0].
+
+Estructuras de Datos
+Los arrays dentro de PHP son muy versátiles, sin embargo es verdad que no solucionan todas las funciones que a veces necesitamos, en lugar de que intentemos forzar la forma en la que usamos los arrays, una buena idea siempre será echar un ojo a las estructuras que SPL nos ofrece.
+
+Entre las estructuras más usadas dentro de SPL podemos encontrar listas, pilas y colas, las cuales sin lugar a dudas darán mucha más claridad a lo que estamos intentando resolver dentro de nuestra aplicación.
+
+Excepciones
+A la hora de enviar excepciones para indicar que ocurrió un error, la forma más sencilla de hacerlo es utilizando la clase Exception, sin embargo SPL nos ofrece una variedad mayor de excepciones, las cuales podemos aprovechar para tener un mejor control de los errores que ocurren en nuestra app.
+
+Por ejemplo LogicException y sus derivadas indican que se encontró un error que probablemente es culpa de nosotros como programadores, algo estamos haciendo mal y debemos tratar de evitar que esto llegue a producción.
+
+Por otro lado RuntimeException y sus derivadas nos indican que algo pasó y no teníamos control de eso durante el desarrollo, por ejemplo una conexión interrumpida a la base de datos o algún archivo al que no podemos acceder, y aunque esto podría pasar en producción, el controlar bien las excepciones nos permitirá al menos tener una falla más amigable y no mostrar al usuario una horrible pantalla con datos de nuestro código.
+
+Algo que también puedes hacer es extender de estas clases y crear tus propias excepciones, de este modo podrás tener aun más información acerca de los que pasa en tu proyecto.
+
+Siempre trata de enviar la excepción que más claramente indique lo que sucedió, esto no hará tu control de errores más sencillo, pero sí te ayudará a entender las causas de los errores que aparecen en tu código.
+
+Conclusión
+Revisa la documentación oficial de SPL donde además de la forma de uso, también encontrarás muchos ejemplos y aportes de la comunidad. Estoy seguro de que una vez que conozcas todo lo que SPL te puede ofrecer, tu experiencia programando con PHP mejorara muchísimo.
+```
+- [21 Debug 8:00 min](https://platzi.com/clases/1462-php-avanzado/16286-xdebug2974/)
+    - `var_dump($var)`
+    - Hay que tener cuidado que cuando se esta captuarando errores con try..catch que en el catch no ocurra otro error porque entonces si llegaría al cliente
+    - nuevo middleware **whoops**
+    - 
+
 - [22 Xdebug 11:00 min]()
 - [23 Logs 12:00 min]()
 - [24 Trabajando con Monolog 7:00 min]()
