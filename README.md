@@ -1013,8 +1013,21 @@ Revisa la documentación oficial de SPL donde además de la forma de uso, tambi�
     - `var_dump($var)`
     - Hay que tener cuidado que cuando se esta captuarando errores con try..catch que en el catch no ocurra otro error porque entonces si llegaría al cliente
     - nuevo middleware **whoops**
-    - 
-
+    - `composer require filp/whoops`
+    - Se puede usar con middlewares de psr7
+    - `composer require franzl/whoops-middleware` ya viene preparado para integrarlo con nuestra app
+    - Whoops intercepta los errores y muestra una página con más detalles y los datos de configuración del servidor
+    - También permite navegar por la pila de llamadas
+    ```php
+    $harmony = new Harmony($request, new Response());
+    $harmony->addMiddleware(new HttpHandlerRunnerMiddleware(new SapiEmitter()));
+    if (getenv('DEBUG') === "true") {
+        $harmony->addMiddleware(new \Franzl\Middleware\Whoops\WhoopsMiddleware);
+    }
+    $harmony->addMiddleware(new Middlewares\AuraRouter($routerContainer))
+        ->addMiddleware(new AuthenticationMiddleware())
+        ->addMiddleware(new DispatcherMiddleware($container, 'request-handler'));
+    ```
 - [22 Xdebug 11:00 min]()
 - [23 Logs 12:00 min]()
 - [24 Trabajando con Monolog 7:00 min]()
