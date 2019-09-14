@@ -1090,7 +1090,8 @@ Revisa la documentación oficial de SPL donde además de la forma de uso, tambi�
     ```
 
 #### 6 Databases 
-- [25 Migraciones de bases de datos 14:00 min]()
+- [25 Migraciones de bases de datos 14:00 min](https://platzi.com/clases/1462-php-avanzado/16289-migraciones-de-bases-de-datos5955/)
+    - 
 
 #### 7 Comandos y Tareas asíncronas 
 - [26 Comandos 13:00 min]()
