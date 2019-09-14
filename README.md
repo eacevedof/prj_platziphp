@@ -849,7 +849,7 @@
         - Verifica que no haya una salida (un echo u output x)
         - Envia los encabezados
         - Envía el estado de la respuesta
-        - Envía el el cuerpo
+        - Envía el cuerpo
 - [18 Creando un middleware 14:00 min](https://platzi.com/clases/1462-php-avanzado/16283-creando-un-middleware8452/)
     - Se crea una carpeta middlewares
     - Clase: **AuthenticationMiddleware**
@@ -907,7 +907,80 @@
     ```
 
 #### 5 Errores y debug 
-- [19 Error Handling 13:00 min]()
+- [19 Error Handling 13:00 min](https://platzi.com/clases/1462-php-avanzado/16285-error-handling5612/)
+    ```php
+    //si no llega un id delete daria un 
+    //Fatal error: Uncaught Error call to a member function delete on null
+    //esto lo podemos interceptar con un try catch o podemos crear nuestra excepcion
+    class JobsService
+    {
+        public function deleteJob($id){
+            //$job = Job::find($id);
+            //if(!$job)
+                //throw new \Exception("job not found");
+
+            //alternativa al cod anterior que lanza una excepción
+            //en caso de error
+            $job = Job::findOrFail($id); 
+            $job->delete();
+        }
+    }
+
+    //index.php
+    ...
+    if(!$route)
+    {
+        echo "no route";
+    }
+    else
+    {
+        try {
+            $harmony = new Harmony(...)
+            $harmony
+                ->addMiddleware(...)
+            ...
+        }
+        //aqui se escucharia todas las excepciones lanzadas por el programador con:
+        //throw new \Exception(mensaje);
+        catch(Exception $oEx)
+        {
+            $emitter = new SapiEmitter();
+            //400 indica que el parámetro enviado es incorrecto
+            $emitter->emit(new Response\EmptyResponse(400));//emite la respuesta
+            //con 400+EmptyResponse se muestra una página cruda de error
+            //esta se podría customizar a otra con mejor diseño
+        }
+        //son acciones inválidas que se intenta hacer, division por cero, sumar objetos, etc
+        //es decir, es un error del programador y no está controlado 
+        catch(Error $oErr)
+        {
+            $emitter = new SapiEmitter();
+            $emitter->emit(new Response\EmptyResponse(500));
+        }
+    }
+    ```
+    - La diferencia entre errores y excepciones es que las segundas son enviadas por el programador
+    - Los errores son acciones que php detecta que no pueden ser realizadas, por ejemplo llamar una función delete en un objeto null
+    - A partir de php 7 si podemos capturar los errores 
+    - En php.net se puede ver la Jerarquía de errores:
+        - Throwable (Interfaz que hace que se puedan gestionar con try...catch)
+            - Error
+                - ArithmeticError
+                    - DivisionByZeroError
+                - AssertionError
+                - ParseError
+                - TypeError
+                    - ArgumentCountError
+            - Exception
+    - No debemos de Implementar nunca la interfaz Trhowable sino tenemos que heredar de Exception
+    - Podemos agregar un catch para cada caso y así evitar que la excepcion sea tan genérica
+    - **SPL** Biblioteca estándar de PHP
+    - Aqui podemos ver una lista de excepciones que podemos devolver
+        - BadFunctionCallException, DomainException, LogicException, RangeException, UnderflowException ...
+    -
+
+
+
 - [20 La biblioteca SPL 3:00 min]()
 - [21 Debug 8:00 min]()
 - [22 Xdebug 11:00 min]()
