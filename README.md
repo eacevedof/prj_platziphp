@@ -1045,7 +1045,24 @@ Revisa la documentación oficial de SPL donde además de la forma de uso, tambi�
         - Ejecutamos la escucha de xdebug ![escuchar xdebug](https://trello-attachments.s3.amazonaws.com/5d7d417df5d88b1db3750086/197x123/e7d1d1732a56c0a1cf53d9cb913c57a8/image.png)
         - configuramos breakpoints
         - hay que configurar en path mappings con la ruta de homestead para que sepa (phpstorm) donde instanciar las clases
-- [23 Logs 12:00 min]()
+- [23 Logs 12:00 min](https://platzi.com/clases/1462-php-avanzado/16287-logs5146/)
+    - los logs se encuentra en `var/log/nginx/`
+    - tenemos un **cursophp.test-error.log, homestead.test-error.log** que hemos configurado en el fichero homestead.yml
+    - instalamos monolog `composer require monolog/monolog`
+    ```php
+    //index.php
+    use Monolog\Logger;
+    use Monolog\Handler\StreamHandler;
+
+    $log = new Logger("app");
+    $log->pushHandler(new StreamHandler(__DIR__."/../logs/app.log", Logger::WARNING));
+    ```
+    - se agrega un **.gitignore** dentro de la carpeta de logs
+    - en el **.gitignore** se introduce estas dos lineas
+        - ignora todo menos el .gitignore
+        - *
+        - !.gitignore
+    
 - [24 Trabajando con Monolog 7:00 min]()
 
 #### 6 Databases 
