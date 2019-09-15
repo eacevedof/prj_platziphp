@@ -1266,7 +1266,9 @@ Revisa la documentación oficial de SPL donde además de la forma de uso, tambi�
         - Se ejecutará cada minuto
     - Hay que reiniciar el servicio con: `sudo systemctl restart cron` 
     - comprobamos el email en **mailtrap**
-- [31 Crear un comando para agregar usuarios 3:00 min]()
+- [31 Crear un comando para agregar usuarios 3:00 min](https://platzi.com/clases/1462-php-avanzado/16402-crear-un-comando-para-agregar-usuarios/)
+    - Crear comando que permita insertar nuevos usuarios en la bd
+    - [Clase: CreateUserCommand.php](https://github.com/eacevedof/prj_platziphp/blob/master/app/Commands/CreateUserCommand.php)
 
 #### 8 Seguridad
 - [32 Seguridad Security 14:00 min]()
