@@ -1180,6 +1180,8 @@ Revisa la documentación oficial de SPL donde además de la forma de uso, tambi�
     }
     ```
 - [27 Formulario para contacto 8:00 min](https://platzi.com/clases/1462-php-avanzado/16292-fomulario-para-contacto5434/)
+    - Se configura el formulario de contacto en twig
+    - Se configura el Controlador y las rutas implicadas
 - [28 Emails 10:00 min]()
 - [29 Async tasks 14:00 min]()
 - [30 Procesar tareas asíncronas 8:00 min]()
