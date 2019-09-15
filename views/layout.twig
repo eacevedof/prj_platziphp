@@ -15,13 +15,18 @@
 </head>
 
 <body>
+  <!-- menu principal -->
   <div class="container">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <a class="navbar-brand" href="/">Home</a>
       <a class="navbar-brand" href="/login">Login</a>
       <a class="navbar-brand" href="/admin">Admin</a>
+      <a class="navbar-brand" href="/admin/users/add">New user</a>
+      <a class="navbar-brand" href="/admin/jobs/add">New job</a>
+      <a class="navbar-brand" href="/admin/profile/changePassword">Change user password</a>
     </nav>
   </div>
+  <!--/menu principal -->
   <div class="container">
     {% block content %}{% endblock %}
   </div>
