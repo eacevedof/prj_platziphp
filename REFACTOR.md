@@ -205,7 +205,7 @@
     - creo que la solución pasa por ~instalar los paquetes de composer, para esto hay que entrar a la maquina usando ssh~ No, la solución era corregir la ruta de mapeo de carpetas de homestead
   - conectando por ssh:
     - `$ vagrant global-status` comprobamos las maquinas en ejecución
-    - [`$ vagrant global-status`](https://trello-attachments.s3.amazonaws.com/5d7e2d2ed198de4622e527f7/537x81/f6f9d973c819d636ed60bad514b1c0a8/image.png)
+    - ![`$ vagrant global-status`](https://trello-attachments.s3.amazonaws.com/5d7e2d2ed198de4622e527f7/537x81/f6f9d973c819d636ed60bad514b1c0a8/image.png)
     - con el id conectamos así:`vagrant ssh 3e46cc1`
     - ![resultado de vagrant ssh](https://trello-attachments.s3.amazonaws.com/5d7e2d2ed198de4622e527f7/554x294/94abd9e13da01963fcd3e9a20a86699d/image.png)
     - **error:** WTF! una vez dentro de vegrant no tengo la carpeta mapeada correctamente :s 
