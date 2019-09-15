@@ -54,10 +54,14 @@ $oZendRequest = Zend\Diactoros\ServerRequestFactory::fromGlobals(
 
 $oAuraRouterContainer = new RouterContainer();
 $oRouteMap = $oAuraRouterContainer->getMap();
-include_once __DIR__."/../routes/routes_all.php";
 
-foreach($r as $route)
-    $oRouteMap->{$route["action"]}($route["name"],$route["path"],[$route["controller"],$route["method"]]);
+include_once __DIR__."/../routes/routes_all.php";
+foreach($routes as $route)
+    $oRouteMap->{$route["action"]}(
+        $route["name"]
+        ,$route["path"]
+        ,[$route["controller"],$route["method"]]
+    );
 
 try{
     $oHarmonyMiddleware = new Harmony($oZendRequest, new Response());
@@ -70,11 +74,13 @@ try{
         ->addMiddleware(new AuthenticationMiddleware())
         ->addMiddleware(new DispatcherMiddleware($oDependInyector,"request-handler"));
     $oHarmonyMiddleware();
-} catch (Exception $e) {
+}
+catch (Exception $e) {
     $oLogger->error($e->getMessage());
     $oZendEmitter = new SapiEmitter();
     $oZendEmitter->emit(new Response\EmptyResponse(500));
-} catch (Error $e) {
+}
+catch (Error $e) {
     $oLogger->error($e->getMessage());
     $oZendEmitter = new SapiEmitter();
     $oZendEmitter->emit(new Response\EmptyResponse(500));
