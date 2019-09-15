@@ -54,67 +54,10 @@ $oZendRequest = Zend\Diactoros\ServerRequestFactory::fromGlobals(
 
 $oAuraRouterContainer = new RouterContainer();
 $oRouteMap = $oAuraRouterContainer->getMap();
-$oRouteMap->get("index", "/", [
-    "App\Controllers\IndexController",
-    "indexAction"
-]);
-$oRouteMap->get("contact", "/contact", [
-    "App\Controllers\ContactController",
-    "indexAction"
-]);
-$oRouteMap->post("sendContact", "/contact/send", [
-    "App\Controllers\ContactController",
-    "sendAction"
-]);
-$oRouteMap->get("indexJobs", "/admin/jobs", [
-    "App\Controllers\JobsController",
-    "indexAction"
-]);
-$oRouteMap->get("deleteJobs", "/admin/jobs/{id}/delete", [
-    "App\Controllers\JobsController",
-    "deleteAction"
-]);
-$oRouteMap->get("addJobs", "/admin/jobs/add", [
-    "App\Controllers\JobsController",
-    "getAddJobAction"
-]);
-$oRouteMap->post("saveJobs", "/admin/jobs/add", [
-    \App\Controllers\JobsController::class,
-    "getAddJobAction"
-]);
-$oRouteMap->get("addUser", "/admin/users/add", [
-    "App\Controllers\UsersController",
-    "getAddUser"
-]);
-$oRouteMap->post("saveUser", "/admin/users/save", [
-    "App\Controllers\UsersController",
-    "postSaveUser"
-]);
-$oRouteMap->get("loginForm", "/login", [
-    "App\Controllers\AuthController",
-    "getLogin"
-]);
-$oRouteMap->get("logout", "/logout", [
-    "App\Controllers\AuthController",
-    "getLogout"
-]);
-$oRouteMap->post("auth", "/auth", [
-    "App\Controllers\AuthController",
-    "postLogin"
-]);
-$oRouteMap->get("admin", "/admin", [
-    "App\Controllers\AdminController",
-    "getIndex"
-]);
-$oRouteMap->get("admin.profile.changePassword", "/admin/profile/changePassword", [
-    "App\Controllers\ProfileController",
-    "changePassword"
-]);
-$oRouteMap->post("admin.profile.savePassword", "/admin/profile/savePassword", [
-    "App\Controllers\ProfileController",
-    "savePassword"
-]);
+include_once __DIR__."/../routes/routes_all.php";
 
+foreach($r as $route)
+    $oRouteMap->{$route["action"]}($route["name"],$route["path"],[$route["controller"],$route["method"]]);
 
 try{
     $oHarmonyMiddleware = new Harmony($oZendRequest, new Response());
