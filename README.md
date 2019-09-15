@@ -1182,7 +1182,60 @@ Revisa la documentación oficial de SPL donde además de la forma de uso, tambi�
 - [27 Formulario para contacto 8:00 min](https://platzi.com/clases/1462-php-avanzado/16292-fomulario-para-contacto5434/)
     - Se configura el formulario de contacto en twig
     - Se configura el Controlador y las rutas implicadas
-- [28 Emails 10:00 min]()
+- [28 Emails 10:00 min](https://platzi.com/clases/1462-php-avanzado/16291-emails1266/)
+    - instalamos [**swiftmailer**](https://swiftmailer.symfony.com/docs/introduction.html) que es una libreria de symfony
+    - [doc de swiftmailer usando Symfony 4](https://symfony.com/doc/current/email.html#installation) no es nuestro caso
+    - En el video vemos que se instala explicitamete la versión: 6:0
+    - Según la docu de symfony ahora viene en bundle ^^ no entiendo pq se separan en ver bundle y sin bundle.
+    - `composer require "swiftmailer/swiftmailer:^6.0"`
+    - Para pruebas de envio de correos usarémos [**mailtrap.io**](https://mailtrap.io), es una plataforma que nos permite probar envios de correos electronicos
+    - ![mailtrap config](https://trello-attachments.s3.amazonaws.com/5d7d417df5d88b1db3750086/693x202/2d1fc9ce4d7ae1ffc2a27fa153a94133/image.png)
+    - [mailtrap/settings](https://mailtrap.io/inboxes/699342/settings) aqui se encuentra la configuración smtp y pop3    
+    - ![datos smtp y pop3](https://trello-attachments.s3.amazonaws.com/5b014dcaf4507eacfc1b4540/5d7d417df5d88b1db3750086/a2fa3801de811544bf39646bb48b9538/image.png)
+    - 
+    ```php
+    //SendMailsCommand.php
+    use App\Models\Message;
+    use Swift_Mailer;
+    use Swift_Message;
+    use Swift_SmtpTransport;
+    use Symfony\Component\Console\Command\Command;
+    use Symfony\Component\Console\Input\InputArgument;
+    use Symfony\Component\Console\Input\InputInterface;
+    use Symfony\Component\Console\Output\OutputInterface;
+
+    class SendMailsCommand extends Command
+    {
+        protected static $defaultName = 'app:send-mails';
+
+        protected function execute(InputInterface $input, OutputInterface $output)
+        {
+            $pendingMessage = Message::where('email_sent', false)->first();
+            
+            if( $pendingMessage) {
+                //se configura por entornos
+                $transport = (new Swift_SmtpTransport(getenv('SMTP_HOST'), getenv('SMTP_PORT')))
+                    ->setUsername(getenv('SMTP_USER'))
+                    ->setPassword(getenv('SMTP_PASS'));
+
+                $mailer = new Swift_Mailer($transport);
+                $message = (new Swift_Message('Contact request'))
+                    ->setFrom(['resume@domain.com' => 'Contact'])
+                    ->setTo(['yourmail@domain.org'])
+                    ->setBody('Hi, you have a new contact request from ' . $pendingMessage->name
+                        . '. Contact: ' . $pendingMessage->mail . ' with message: ' . $pendingMessage->message
+                    );
+
+                $mailer->send($message);
+                $pendingMessage->email_sent = true;
+                $pendingMessage->save();
+            }
+            return true;
+        }
+    }//SendMailsCommand
+    ```
+    - En el envio, al ser un servicio externo el hilo se queda bloqueado con lo cual el usuario no sabe lo que pasa
+    - Esto lo solucionaremos usando un proceso asincrono de envio
 - [29 Async tasks 14:00 min]()
 - [30 Procesar tareas asíncronas 8:00 min]()
 - [31 Crear un comando para agregar usuarios 3:00 min]()
