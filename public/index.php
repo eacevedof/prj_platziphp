@@ -55,7 +55,7 @@ $oZendRequest = Zend\Diactoros\ServerRequestFactory::fromGlobals(
 $oAuraRouterContainer = new RouterContainer();
 $oRouteMap = $oAuraRouterContainer->getMap();
 
-include_once __DIR__."/../routes/routes_all.php";
+include_once __DIR__ . "/../app/routes/routes_all.php";
 foreach($routes as $route)
     $oRouteMap->{$route["action"]}(
         $route["name"]
