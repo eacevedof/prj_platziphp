@@ -1286,16 +1286,62 @@ usando buenas prácticas.
 Confiar en lo que el usuario escribe es un error al desarrollar porque puede haber atacantes que buscan obtener 
 información que no les corresponde.
 
-En pdo existen las sentencias preparadas que creará el query con placeholders que luego se cambiarán por los valores reales, 
-escapando la información y evitando SQL Injection. Lo importante es que cuando trabajes con entradas de usuario, valides siempre.
-Un ataque XSS es un ataque en el que alguien trata de inyectar código en nuestra aplicación. Chrome cuenta con un auditor que 
-evita estos ataques pero sólo a partir de una versión avanzada.
-strip_tags y htmlspecialchars van a escapar los caracteres HTML evitando ataques XSS
+En pdo existen las sentencias preparadas que creará el query con placeholders que luego se cambiarán por los valores 
+reales, escapando la información y evitando SQL Injection. Lo importante es que cuando trabajes con entradas de 
+usuario, valides siempre.
+
+Un ataque XSS es un ataque en el que alguien trata de inyectar código en nuestra aplicación. Chrome cuenta con un 
+auditor que evita estos ataques pero sólo a partir de una versión avanzada. strip_tags y htmlspecialchars van a escapar 
+los caracteres HTML evitando ataques XSS
 ```
 
 #### 9 Conclusiones 
-- [34 Crea una API Rest Cierre 1:00 min]()
-
+- [34 Crea una API Rest Cierre 16:00 min - Youtube](https://www.youtube.com/watch?time_continue=58&v=CqmeYFDOGCE)
+    - [spring.io](https://docs.spring.io/spring-restdocs/docs/2.0.0.RELEASE/reference/html5/)
+    - post, put, patch, delete
+    - [http status codes](https://es.wikipedia.org/wiki/Anexo:Códigos_de_estado_HTTP)
+        - 1xx informational
+        - 2xx success
+        - 3xx redirection
+        - 4xx client error
+        - 5xx server error
+    - [repo: php-database-crud - branch final](https://github.com/hectorbenitez/php-database-crud/tree/final)
+    - [repo: php-database-crud - branch api](https://github.com/hectorbenitez/php-database-crud/tree/api)
+    - Primero debemos definir las rutas
+    - Versionado de api: Por url o encabezados. Mejor por url
+        - `api/v1/tasks` = `api/v1/<tabla>`
+    - Estamos trabajando con psr-15 y psr-17 
+        - [PSR-7: HTTP message interfaces](https://www.php-fig.org/psr/psr-7/) `$response`
+        - [PSR-15: HTTP Server Request Handlers](https://www.php-fig.org/psr/psr-15/)
+        - cualquier paquete que cumpla con esto nos serviría para tratar el objeto `$request`
+    ```php
+    $map->get('api.tasks.get', '/api/v1/tasks', function ($request) {
+        $tasks = Task::all();
+        return new \Zend\Diactoros\Response\JsonResponse($tasks);
+    });
+    $map->post('api.tasks.post', '/api/v1/tasks', function ($request) {
+        $data = json_decode($request->getBody()->getContents(), true);
+        $task = new Task();
+        $task->description = $data["description"];
+        $task->save();
+        return new \Zend\Diactoros\Response\EmptyResponse(201);
+    });
+    $map->patch('api.tasks.patch', '/api/v1/tasks/{id}', function ($request) {
+        $data = json_decode($request->getBody()->getContents(), true);
+        $id = $request->getAttribute('id');
+        $task = Task::find($id);
+        $task->done = $data['done'];
+        $task->save();
+        return new \Zend\Diactoros\Response\JsonResponse($task);
+    });
+    $map->delete('api.tasks.delete', '/api/v1/tasks/{id}', function ($request) {
+        $id = $request->getAttribute('id');
+        $task = Task::find($id);
+        $task->delete();
+        return new \Zend\Diactoros\Response\EmptyResponse(204);
+    });
+    ```
+    - 
 ## FrontController
 - [public/index.php](https://github.com/eacevedof/prj_platziphp/blob/master/public/index.php)
 ```php
