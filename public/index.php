@@ -63,26 +63,29 @@ foreach($routes as $route)
         ,[$route["controller"],$route["method"]]
     );
 
-try{
+try
+{
     $oHarmonyMiddleware = new Harmony($oZendRequest, new Response());
 
     $oHarmonyMiddleware->addMiddleware(new HttpHandlerRunnerMiddleware(new SapiEmitter()));
-    if (getenv("DEBUG") === "true") {
+    if (getenv("DEBUG") === "true")
         $oHarmonyMiddleware->addMiddleware(new \Franzl\Middleware\Whoops\WhoopsMiddleware);
-    }
+
     $oHarmonyMiddleware->addMiddleware(new Middlewares\AuraRouter($oAuraRouterContainer))
         ->addMiddleware(new AuthenticationMiddleware())
         ->addMiddleware(new DispatcherMiddleware($oDependInyector,"request-handler"))
         ->run();
 }
-catch (Exception $e) {
-    $oLogger->error($e->getMessage());
+catch (Exception $oEx)
+{
+    $oLogger->error($oEx->getMessage());
     $oZendEmitter = new SapiEmitter();
     $oZendEmitter->emit(new Response\EmptyResponse(500));
 }
-catch (Error $e) {
-    $oLogger->error($e->getMessage());
+catch (Error $oErr)
+{
+    $oLogger->error($oErr->getMessage());
     $oZendEmitter = new SapiEmitter();
     $oZendEmitter->emit(new Response\EmptyResponse(500));
 }
-
+//end public/index.php
