@@ -1114,10 +1114,72 @@ Revisa la documentación oficial de SPL donde además de la forma de uso, tambi�
     - se creará una tabla phinxlog que llevará un registro de los cambios
     - `vendor/bin/phinx rollback` deshara los cambios
     - `vendor/bin/phinx migrate` volverá a crear la tabla
-    
+
 #### 7 Comandos y Tareas asíncronas 
-- [26 Comandos 13:00 min]()
-- [27 Formulario para contacto 8:00 min]()
+- [26 Comandos 13:00 min](https://platzi.com/clases/1462-php-avanzado/16290-comandos3183/)
+    - A veces necesitamos hacer acciones que no esten ligadas al navegador
+    - Por ejemplo, la creación del usuario 1 
+    - Tareas asincronas, tareas que toman mucho tiempo.
+    - para esto php ofrece la posibilidad de crear comandos, algo como **phinx** (migraciones)
+    - instalaremos **Symfony Console**
+    - [`composer require symfony/console`](https://symfony.com/doc/current/components/console.html)
+    ```php
+    #!/usr/bin/env php   --> linea shban indica hacia donde debe ir su ejecución, en este caso lo 
+    //intentaría enviar a php
+
+    require __DIR__.'/vendor/autoload.php';
+    use Symfony\Component\Console\Application;
+    $application = new Application();
+    // ... register commands
+    //$application->add(new GenerateAdminCommand());
+    $application->run();
+    ```
+    - En la raiz se crea fichero **console.php**
+    - Entramos a la raiz del proyecto y probamos el fichero: `php console.php` veremos una ayuda por defecto
+    - Ahora tenemos que crear los comandos que utilizaremos
+    - [Crear el comando](https://symfony.com/doc/current/console.html)
+    - Creamos carpeta en **App/Commdas**
+    ```php
+    //CreateUserCommand.php
+
+    //el nombre tiene la palabra app: que no es obligatoria per le da una descripción más intuitiva al comando ya que cuando
+    //lo vaya a usar alguien le informará que se usa en la parte de app
+    protected static $defaultName = 'app:create-user'; 
+
+    protected function execute(InputInterface $input, OutputInterface $output)
+    {
+        $output->writeln([
+            'User Creator',
+            '============',
+            '',
+        ]);
+
+        $user = new User();
+        //este argumento se configura en el metodo "configure"
+        $user->email = $input->getArgument('email');
+        $user->password = password_hash('123456', PASSWORD_DEFAULT);
+        $user->save();
+        $output->writeln('Done.');
+    }   
+     
+    //ahora hay que decirle al gestor de comandos que existe un nuevo comando 
+    //index.php
+    $application = new Application();
+    $application->add(new CreateUserCommand());
+    $application->run();
+    //para mandar mensajes de salida podríamos usar echo, pero usarémos 
+    //OutputInterface que es lo que trae Symfony: $output->writln(texto)
+
+    # configurando argumentos
+    //CreateUserCommand.php
+    protected function configure()
+    {
+        $this
+            ->addArgument('email', InputArgument::REQUIRED, 'The email of the user.')
+        ;
+    }
+    ```
+- [27 Formulario para contacto 8:00 min](https://platzi.com/clases/1462-php-avanzado/16292-fomulario-para-contacto5434/)
 - [28 Emails 10:00 min]()
 - [29 Async tasks 14:00 min]()
 - [30 Procesar tareas asíncronas 8:00 min]()
