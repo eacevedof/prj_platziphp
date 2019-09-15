@@ -1276,8 +1276,22 @@ Revisa la documentación oficial de SPL donde además de la forma de uso, tambi�
     - Crear validaciones robustas
     - Proyecto [**OWASP**](https://www.owasp.org/index.php/Main_Page)
         - Ofrece aplicaciones que prueban la vulnerabilidad de tu sitio
-        - 
-- [33 Security Examples 1:00 min]()
+    - Usar conexiones seguras **https**
+- [33 Security Examples 1:00 min](https://platzi.com/clases/1462-php-avanzado/16235-security-examples/)
+```
+pdo viene de PHP Data Object y son las librerías base con las que se comunica PHP y un motor de base de datos. 
+Eloquent encapsula esta información y nos genera una capa superior que nos permite comunicarnos con la base de datos 
+usando buenas prácticas.
+
+Confiar en lo que el usuario escribe es un error al desarrollar porque puede haber atacantes que buscan obtener 
+información que no les corresponde.
+
+En pdo existen las sentencias preparadas que creará el query con placeholders que luego se cambiarán por los valores reales, 
+escapando la información y evitando SQL Injection. Lo importante es que cuando trabajes con entradas de usuario, valides siempre.
+Un ataque XSS es un ataque en el que alguien trata de inyectar código en nuestra aplicación. Chrome cuenta con un auditor que 
+evita estos ataques pero sólo a partir de una versión avanzada.
+strip_tags y htmlspecialchars van a escapar los caracteres HTML evitando ataques XSS
+```
 
 #### 9 Conclusiones 
 - [34 Crea una API Rest Cierre 1:00 min]()
