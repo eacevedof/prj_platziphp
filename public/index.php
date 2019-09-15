@@ -72,8 +72,8 @@ try{
     }
     $oHarmonyMiddleware->addMiddleware(new Middlewares\AuraRouter($oAuraRouterContainer))
         ->addMiddleware(new AuthenticationMiddleware())
-        ->addMiddleware(new DispatcherMiddleware($oDependInyector,"request-handler"));
-    $oHarmonyMiddleware();
+        ->addMiddleware(new DispatcherMiddleware($oDependInyector,"request-handler"))
+        ->run();
 }
 catch (Exception $e) {
     $oLogger->error($e->getMessage());
