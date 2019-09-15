@@ -1271,7 +1271,12 @@ Revisa la documentación oficial de SPL donde además de la forma de uso, tambi�
     - [Clase: CreateUserCommand.php](https://github.com/eacevedof/prj_platziphp/blob/master/app/Commands/CreateUserCommand.php)
 
 #### 8 Seguridad
-- [32 Seguridad Security 14:00 min]()
+- [32 Seguridad Security 14:00 min](https://platzi.com/clases/1462-php-avanzado/16237-security0929/)
+    - Trabajar con versiones más actualizadas
+    - Crear validaciones robustas
+    - Proyecto [**OWASP**](https://www.owasp.org/index.php/Main_Page)
+        - Ofrece aplicaciones que prueban la vulnerabilidad de tu sitio
+        - 
 - [33 Security Examples 1:00 min]()
 
 #### 9 Conclusiones 
