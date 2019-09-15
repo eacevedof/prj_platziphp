@@ -1114,9 +1114,8 @@ Revisa la documentación oficial de SPL donde además de la forma de uso, tambi�
     - se creará una tabla phinxlog que llevará un registro de los cambios
     - `vendor/bin/phinx rollback` deshara los cambios
     - `vendor/bin/phinx migrate` volverá a crear la tabla
-    - existe otro paquete: `composer require odan/phinx-migrations-generator --dev`
+    - existe otro paquete: [`composer require odan/phinx-migrations-generator --dev`](https://github.com/odan/phinx-migrations-generator)
         - permite crear todos los ficheros-de-migraciones.php a partir de una bd existente
-
 
 #### 7 Comandos y Tareas asíncronas 
 - [26 Comandos 13:00 min](https://platzi.com/clases/1462-php-avanzado/16290-comandos3183/)
