@@ -1213,7 +1213,8 @@ Revisa la documentación oficial de SPL donde además de la forma de uso, tambi�
             $pendingMessage = Message::where('email_sent', false)->first();
             
             if( $pendingMessage) {
-                //se configura por entornos
+                //se configura por entornos.
+                //Transport es el tipo de servicio de envio
                 $transport = (new Swift_SmtpTransport(getenv('SMTP_HOST'), getenv('SMTP_PORT')))
                     ->setUsername(getenv('SMTP_USER'))
                     ->setPassword(getenv('SMTP_PASS'));
@@ -1236,7 +1237,19 @@ Revisa la documentación oficial de SPL donde además de la forma de uso, tambi�
     ```
     - En el envio, al ser un servicio externo el hilo se queda bloqueado con lo cual el usuario no sabe lo que pasa
     - Esto lo solucionaremos usando un proceso asincrono de envio
-- [29 Async tasks 14:00 min]()
+- [29 Async tasks 14:00 min](https://platzi.com/clases/1462-php-avanzado/16294-async-tasks1970/)
+    - crearemos una tabla donde se almacenarán los correos electrónicos
+    - a posteriori habrá un comando que los envie
+    - por esto tenemos que configurar un cron que este constantemente comprobando los correos
+    - Creamos el comando **SendMailsCommand**
+    - Registramos el comando `$application->add(new SendMailsCommand());`
+    - `vendor/bin/phinx create CreateMessageTable` nos crea una nueva migracion. Fichero:`<timestamp>_create_messages_table.php`
+    - En este fichero configuramos la nueva tabla de mensajes
+    - Hay que importar la configuración en **console.php** porque se van a usar los modelos en los comandos `$dotenv`
+    - Hay que importar la conf de **eloquent** `$capsule`
+    - Enviamos el email: `php console.php app:send-mail`
+    - Comprobamos en mailtrap a ver si se ha procesado el envio
+    
 - [30 Procesar tareas asíncronas 8:00 min]()
 - [31 Crear un comando para agregar usuarios 3:00 min]()
 
