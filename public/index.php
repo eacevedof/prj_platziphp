@@ -117,9 +117,6 @@ $oRouteMap->post("admin.profile.savePassword", "/admin/profile/savePassword", [
 ]);
 
 
-//$oAuraMatcher = $oAuraRouterContainer->getMatcher();
-//$route = $oAuraMatcher->match($oZendRequest);
-
 try{
     $oHarmonyMiddleware = new Harmony($oZendRequest, new Response());
 
