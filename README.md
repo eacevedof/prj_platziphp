@@ -1249,8 +1249,23 @@ Revisa la documentación oficial de SPL donde además de la forma de uso, tambi�
     - Hay que importar la conf de **eloquent** `$capsule`
     - Enviamos el email: `php console.php app:send-mail`
     - Comprobamos en mailtrap a ver si se ha procesado el envio
-    
-- [30 Procesar tareas asíncronas 8:00 min]()
+
+- [30 Procesar tareas asíncronas 8:00 min](https://platzi.com/clases/1462-php-avanzado/16293-procesar-tareas-asincronas9633/)
+    ```php
+    Es necesario lograr que el envío de correos se haga de manera automática pues no sería sostenible llamar comandos de manera manual. 
+    Para esto existe el Cron Job disponible en Linux y Unix que nos permite ejecutar una tarea cada cierto tiempo.
+    https://crontab.guru nos ayudará a traducir lo que necesitamos poner en el Cron.
+
+    Dentro de Linux todos los procesos que están corriendo son conocidos como servicios y cuando queremos recargarlos es necesario reconfigurar y reiniciar.
+
+    //fichero: /etc/crontab
+    solo se puede modifcar con sudo vi /etc/crontab
+    ```
+    - [crontab.guru](https://crontab.guru/)
+    - Despues de configurar el cron con: `* *  * * *  root  php /home/vagrant/code/curso-introduccion-php/console.php app:send-email`
+        - Se ejecutará cada minuto
+    - Hay que reiniciar el servicio con: `sudo systemctl restart cron` 
+    - comprobamos el email en **mailtrap**
 - [31 Crear un comando para agregar usuarios 3:00 min]()
 
 #### 8 Seguridad
