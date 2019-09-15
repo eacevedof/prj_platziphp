@@ -240,8 +240,16 @@
     - `vagrant@homestead:~/code$ php ./vendor/robmorgan/phinx/bin/phinx migrate`
     - tengo que estar en la raiz. No vale `code$ php ./vendor/bin/phinx migrate` dice que no se reconoce el comando o devuelve el **contenido** del fichero phinx
     - ![resultado comando](https://trello-attachments.s3.amazonaws.com/5d7e2d2ed198de4622e527f7/596x350/214384dd15253866cbe195e554a438b7/image.png)
-- Resultado:
-  - ![img resultado final](https://trello-attachments.s3.amazonaws.com/5d7e2d2ed198de4622e527f7/676x655/44951f885445f9f6c3d2d89b399ee09d/image.png)
+  - Resultado:
+    - ![img resultado final](https://trello-attachments.s3.amazonaws.com/5d7e2d2ed198de4622e527f7/676x655/44951f885445f9f6c3d2d89b399ee09d/image.png)
+- Crear usuario
+  - `php console.php app:create-user eaf@eaf.com`
+  - la contraseña según el comando de creación: **123456**
+  ```php
+  $user->email = $input->getArgument('email');
+  $user->password = password_hash('123456', PASSWORD_DEFAULT);
+  $user->save();
+  ```
   
     
     

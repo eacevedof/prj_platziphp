@@ -16,6 +16,13 @@
 
 <body>
   <div class="container">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand" href="/">Home</a>
+      <a class="navbar-brand" href="/login">Login</a>
+      <a class="navbar-brand" href="/admin">Admin</a>
+    </nav>
+  </div>
+  <div class="container">
     {% block content %}{% endblock %}
   </div>
 
@@ -28,5 +35,4 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js" integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em"
     crossorigin="anonymous"></script>
 </body>
-
 </html>

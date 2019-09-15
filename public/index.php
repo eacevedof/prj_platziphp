@@ -22,10 +22,10 @@ use Zend\HttpHandlerRunner\Emitter\SapiEmitter;
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 
-$container = new DI\Container();
+$oDependInyector = new DI\Container();
 
-$capsule = new Capsule;
-$capsule->addConnection([
+$oEloquent = new Capsule;
+$oEloquent->addConnection([
     'driver'    => getenv('DB_DRIVER'),
     'host'      => getenv('DB_HOST'),
     'database'  => getenv('DB_NAME'),
@@ -38,14 +38,14 @@ $capsule->addConnection([
 ]);
 
 // Make this Capsule instance available globally via static methods... (optional)
-$capsule->setAsGlobal();
+$oEloquent->setAsGlobal();
 // Setup the Eloquent ORM... (optional; unless you've used setEventDispatcher())
-$capsule->bootEloquent();
+$oEloquent->bootEloquent();
 
-$log = new Logger('app');
-$log->pushHandler(new StreamHandler(__DIR__ . '/../logs/app.log', Logger::WARNING));
+$oLogger = new Logger('app');
+$oLogger->pushHandler(new StreamHandler(__DIR__ . '/../logs/app.log', Logger::WARNING));
 
-$request = Zend\Diactoros\ServerRequestFactory::fromGlobals(
+$oZendRequest = Zend\Diactoros\ServerRequestFactory::fromGlobals(
     $_SERVER,
     $_GET,
     $_POST,
@@ -53,92 +53,91 @@ $request = Zend\Diactoros\ServerRequestFactory::fromGlobals(
     $_FILES
 );
 
-$routerContainer = new RouterContainer();
-$map = $routerContainer->getMap();
-$map->get('index', '/', [
+$oAuraRouterContainer = new RouterContainer();
+$oRouteMap = $oAuraRouterContainer->getMap();
+$oRouteMap->get('index', '/', [
     'App\Controllers\IndexController',
     'indexAction'
 ]);
-$map->get('contact', '/contact', [
+$oRouteMap->get('contact', '/contact', [
     'App\Controllers\ContactController',
     'indexAction'
 ]);
-$map->post('sendContact', '/contact/send', [
+$oRouteMap->post('sendContact', '/contact/send', [
     'App\Controllers\ContactController',
     'sendAction'
 ]);
-$map->get('indexJobs', '/admin/jobs', [
+$oRouteMap->get('indexJobs', '/admin/jobs', [
     'App\Controllers\JobsController',
     'indexAction'
 ]);
-$map->get('deleteJobs', '/admin/jobs/{id}/delete', [
+$oRouteMap->get('deleteJobs', '/admin/jobs/{id}/delete', [
     'App\Controllers\JobsController',
     'deleteAction'
 ]);
-$map->get('addJobs', '/admin/jobs/add', [
+$oRouteMap->get('addJobs', '/admin/jobs/add', [
     'App\Controllers\JobsController',
     'getAddJobAction'
 ]);
-$map->post('saveJobs', '/admin/jobs/add', [
+$oRouteMap->post('saveJobs', '/admin/jobs/add', [
     \App\Controllers\JobsController::class,
     'getAddJobAction'
 ]);
-$map->get('addUser', '/admin/users/add', [
+$oRouteMap->get('addUser', '/admin/users/add', [
     'App\Controllers\UsersController',
     'getAddUser'
 ]);
-$map->post('saveUser', '/admin/users/save', [
+$oRouteMap->post('saveUser', '/admin/users/save', [
     'App\Controllers\UsersController',
     'postSaveUser'
 ]);
-$map->get('loginForm', '/login', [
+$oRouteMap->get('loginForm', '/login', [
     'App\Controllers\AuthController',
     'getLogin'
 ]);
-$map->get('logout', '/logout', [
+$oRouteMap->get('logout', '/logout', [
     'App\Controllers\AuthController',
     'getLogout'
 ]);
-$map->post('auth', '/auth', [
+$oRouteMap->post('auth', '/auth', [
     'App\Controllers\AuthController',
     'postLogin'
 ]);
-$map->get('admin', '/admin', [
+$oRouteMap->get('admin', '/admin', [
     'App\Controllers\AdminController',
     'getIndex'
 ]);
-$map->get('admin.profile.changePassword', '/admin/profile/changePassword', [
+$oRouteMap->get('admin.profile.changePassword', '/admin/profile/changePassword', [
     'App\Controllers\ProfileController',
     'changePassword'
 ]);
-$map->post('admin.profile.savePassword', '/admin/profile/savePassword', [
+$oRouteMap->post('admin.profile.savePassword', '/admin/profile/savePassword', [
     'App\Controllers\ProfileController',
     'savePassword'
 ]);
 
 
-$matcher = $routerContainer->getMatcher();
-$route = $matcher->match($request);
+$oAuraMatcher = $oAuraRouterContainer->getMatcher();
+$route = $oAuraMatcher->match($oZendRequest);
 
 try{
-    $harmony = new Harmony($request, new Response());
+    $oHarmonyMiddleware = new Harmony($oZendRequest, new Response());
 
-    $harmony->addMiddleware(new HttpHandlerRunnerMiddleware(new SapiEmitter()));
+    $oHarmonyMiddleware->addMiddleware(new HttpHandlerRunnerMiddleware(new SapiEmitter()));
     if (getenv('DEBUG') === "true") {
-        $harmony->addMiddleware(new \Franzl\Middleware\Whoops\WhoopsMiddleware);
+        $oHarmonyMiddleware->addMiddleware(new \Franzl\Middleware\Whoops\WhoopsMiddleware);
     }
-    $harmony->addMiddleware(new Middlewares\AuraRouter($routerContainer))
+    $oHarmonyMiddleware->addMiddleware(new Middlewares\AuraRouter($oAuraRouterContainer))
         ->addMiddleware(new AuthenticationMiddleware())
-        ->addMiddleware(new DispatcherMiddleware($container, 'request-handler'));
-
-    $harmony();
+        ->addMiddleware(new DispatcherMiddleware($oDependInyector,'request-handler'));
+    $oHarmonyMiddleware();
 } catch (Exception $e) {
-    $log->error($e->getMessage());
-    $emitter = new SapiEmitter();
-    $emitter->emit(new Response\EmptyResponse(500));
+    $oLogger->error($e->getMessage());
+    $oZendEmitter = new SapiEmitter();
+    $oZendEmitter->emit(new Response\EmptyResponse(500));
 } catch (Error $e) {
-    $log->error($e->getMessage());
-    $emitter = new SapiEmitter();
-    $emitter->emit(new Response\EmptyResponse(500));
+    $oLogger->error($e->getMessage());
+    $oZendEmitter = new SapiEmitter();
+    $oZendEmitter->emit(new Response\EmptyResponse(500));
 }
 
