@@ -1,5 +1,5 @@
 # [Youtube - Domain Driven Design (DDD) - Diseño guiado por el dominio - Evento de Endava by 
-Yoelvis Mulen](https://www.youtube.com/watch?v=Mn4TFBXa_2g)
+- [Yoelvis Mulen](https://www.youtube.com/watch?v=Mn4TFBXa_2g)
 ### [Repo original](https://github.com/ymulenll/OnlineStore/tree/develop)
 
 ## [Sumario](https://youtu.be/Mn4TFBXa_2g?t=46)
@@ -203,13 +203,12 @@ Yoelvis Mulen](https://www.youtube.com/watch?v=Mn4TFBXa_2g)
     ```c#
     //Se le indica que el objeto que reciba la interface sea de tipo Aggregate
     public interface IRepository<T> where T: IAggregateRoot
-    {
-
-    }
+    {}
 
     /*
     - gestor del crud
     - solo se le va a indicar que es lo que hara para persistir
+    - esta será implementada en infraestructura
     */
     public interface IOrderRepository: IRepository<Order>
     {
@@ -218,9 +217,106 @@ Yoelvis Mulen](https://www.youtube.com/watch?v=Mn4TFBXa_2g)
       Order Get(int orderId);
     }
     ```
-
-
+    - [Pendiente](https://youtu.be/Mn4TFBXa_2g?t=1844)
+      - No tocará estos temas :( por cuestión de tiempo
+        - Objetos de valor (value objects)
+        - Servicios de dominio 
+        - Eventos de dominio
+- [**Infrastructure Layer**](https://youtu.be/Mn4TFBXa_2g?t=1884)
+  - Entity framework ORM
+  - ![entity](https://trello-attachments.s3.amazonaws.com/5d85fbb425740b29d72cedbb/909x480/d263d26df113271e4d4614e2fb08160c/image.png)
+  - Se puede configurar las relaciones en los atributos o crear los mapeos aparte
+  - carpeta **Mappings**
+  - [Ejemplo de mapeo en entity:](https://youtu.be/Mn4TFBXa_2g?t=1977)
+    - `public class OrderItemMap:IEntityTypeConfiguration<OrderItem>`
+    - usando fluentAPI
+    - ![entity mappings](https://trello-attachments.s3.amazonaws.com/5d85fbb425740b29d72cedbb/1015x441/a1ebf1f938312c2beb8cb470c36a1894/image.png)
+  ```c#
+  public class OrderRepository: IOrderRepository
+  {
+    //contexto de entity framework
+    private readonly OrderingContext _context;
     
+    public OrderRepository(OrderingContext context){}
+
+    public void Add(Order order)
+    {
+      _context.Orders.Add(order)
+      _context.SaveChanges();
+    }
+
+  }
+  ```
+- [**Application Layer**](https://youtu.be/Mn4TFBXa_2g?t=2082)
+  - ![app](https://trello-attachments.s3.amazonaws.com/5d85fbb425740b29d72cedbb/514x355/06c9e3dd265fcf18ac14d5fa66c6b5f5/image.png)
+  - Será como un controlador, utilizará Domain e Infrastructure
+  ```c#
+  //IOrdersService.cs
+  using Ordering.Application.InputModels;
+  using Ordering.Application.ViewModel;
+
+  namespace Ordering.Application
+  {
+    public interface IOrdersService
+    {
+        OrderPlacedViewModel PlaceOrder(ShoppingCartInputModel shoppingCartInputModel);
+    }
+  }
+
+
+  using System.Globalization;
+  using Ordering.Application.ExternalServices;
+  using Ordering.Application.InputModels;
+  using Ordering.Application.ViewModel;
+  using Ordering.Domain.Model.OrderAggregate;
+
+  namespace Ordering.Application
+  {
+    public class OrdersService : IOrdersService
+    {
+      private readonly IOrderRepository _orderRepository;
+      private readonly IShippingService _shippingService;
+
+      public OrdersService(IOrderRepository orderRepository, IShippingService shippingService)
+      {
+        _orderRepository = orderRepository;
+        _shippingService = shippingService;
+      }
+
+      public OrderPlacedViewModel PlaceOrder(ShoppingCartInputModel cart)
+      {
+        // 1. Create order in memory.
+        var order = new Order(cart.ShoppingCart.Buyer);
+
+        foreach (var item in cart.ShoppingCart.Items)
+        {
+          order.AddOrderItem(item.Quantity, item.Product);
+        }
+
+        // 2 Store order
+        _orderRepository.Add(order);
+
+        // 3. Ship
+        var shipmentDetails = _shippingService.SendRequestForDelivery(order);
+
+        // 4. Prepare view model
+        var viewModel = new OrderPlacedViewModel
+        {
+          OrderId = order.Id.ToString(CultureInfo.InvariantCulture),
+          ShippingDetails = shipmentDetails
+        };
+
+        return viewModel;
+      }
+    }
+  }  
+  ```
+- [**Presentation Layer**](https://youtu.be/Mn4TFBXa_2g?t=2220)  
+  - La vista se comunica con application
+  - ![presentation layer](https://trello-attachments.s3.amazonaws.com/5d85fbb425740b29d72cedbb/768x541/eab11f23777754c2c63f6d91b4a1729d/image.png)
+  ```c#
+  
+  ```
       
 
    
