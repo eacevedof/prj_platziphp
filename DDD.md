@@ -315,8 +315,42 @@
   - La vista se comunica con application
   - ![presentation layer](https://trello-attachments.s3.amazonaws.com/5d85fbb425740b29d72cedbb/768x541/eab11f23777754c2c63f6d91b4a1729d/image.png)
   ```c#
-  
+  using System;
+  using System.Collections.Generic;
+  using System.Linq;
+  using System.Threading.Tasks;
+  using Microsoft.AspNetCore.Mvc;
+  using Ordering.Application;
+  using Ordering.Application.InputModels;
+
+  namespace Web.MVC.Controllers
+  {
+    public class OrderController : Controller
+    {
+      private readonly IOrdersService _ordersService;
+
+      protected OrderController(IOrdersService ordersService)
+      {
+        _ordersService = ordersService;
+      }
+
+      public IActionResult PlaceTheOrder()
+      {
+        var cart = RetrieveCurrentShoppingCart();
+        var viewModel = _ordersService.PlaceOrder(cart);
+        return View("OrderPlaced", viewModel);
+      }
+
+      private ShoppingCartInputModel RetrieveCurrentShoppingCart()
+      {
+        throw new NotImplementedException();
+      }
+    }//class
+    
+  }//namespace
   ```
+## [¿Cómo manejar la complejidad y los cambios en los requerimientos?](https://youtu.be/Mn4TFBXa_2g?t=2298)
+- 
       
 
    
