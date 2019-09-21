@@ -216,6 +216,7 @@
       void Update(Order order);
       Order Get(int orderId);
     }
+
     ```
     - [Pendiente](https://youtu.be/Mn4TFBXa_2g?t=1844)
       - No tocará estos temas :( por cuestión de tiempo
@@ -350,7 +351,12 @@
   }//namespace
   ```
 ## [¿Cómo manejar la complejidad y los cambios en los requerimientos?](https://youtu.be/Mn4TFBXa_2g?t=2298)
-- 
-      
+- ![resumen](https://trello-attachments.s3.amazonaws.com/5d85fbb425740b29d72cedbb/914x517/0009a442ce2f13ff8673ba914086b368/image.png)
+
+## [Tarea: Variantes del patrón: Modelo de dominio](https://youtu.be/Mn4TFBXa_2g?t=2534)
+- Command-Query Responsability Segregation
+- Event Sourcing
+
+## [Youtube - Diseño guiado por el dominio by Yoelvis Mulen @ .NET Conf UY v2018](https://youtu.be/sQw5vnjdLok)
 
    
