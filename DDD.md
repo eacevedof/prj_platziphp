@@ -108,7 +108,116 @@ Yoelvis Mulen](https://www.youtube.com/watch?v=Mn4TFBXa_2g)
       - **Order** Aggregate root
       - **OrderItem** Child Entity
       - **OrderState**  Enum type (menu en la orden)
-  
+  - **Show me the code**
+    - [Order Img](https://trello-attachments.s3.amazonaws.com/5d85fbb425740b29d72cedbb/975x529/d4f363a596ebb5d25deb83eb94c1d7c1/image.png)
+    ```c#
+    /*
+    - solo se van a poder crear pedidos usando el constructor ya que los metodos set son privados
+    - de esta manera se garantiza la consistencia en la entidad
+    - en esta capa no se persistiran los pedidos (infrastructure ignore)
+    - con el IAggregateRoot se obliga a que solo se persistan los objetos que implementen esta interface
+    - de modo que no se pueda persistir un OrderItem por separado, así obligo que pasen el filtro del root
+    - al ser OrderItem IEnumerable obliga que no se inyecte objetos OrderItem por otro lado ya que solo
+    devolverá los items recuperados por _orderItems
+
+    */
+
+    //Entity tiene el campo id
+    public class Order: Entity, IAggregateRoot
+    {
+      public Order(Customer oBuyer)
+      {
+        Buyer = oBuyer;
+        Date = DateTime.UtcNow;
+        State = OrderState.Pending;
+      }
+
+      //este constructor está protegido ya que lo requiere Entity Framework
+      protected Order()
+      {}
+
+      public OrderState State {get; private set;}
+      public DateTime Date {get; private set;}
+      public Customer Buyer {get; private set;}
+      ...
+      public IEnumerable<OrderItem> OrderItem => _orderItems.AsReadOnly();
+
+      public void AddOrderItem(int quantity, Product oProduct)
+      {
+        var existingItemForProduct = _orderItmes.SingleOrDefault(item => item.Product.id == oProduct.id);
+        //si existe el producto en el listado, actualiza la cantidad
+        if(existingItemForProduct != null)
+        {
+          existingItemForProduct.AddUnits(quantity);
+        }
+        //si no existe
+        else
+        {
+          //create new item
+          var orderItem = new OrderItem(this,quantity,oProduct);
+          _orderItems.add(orderItem);
+        }
+      }
+
+      //aplicamos el método con el lenguaje ubicuo
+      public Order MarkAsShipped()
+      {
+        //regla de negocio:
+        //si el estado no es pendiente, no se puede marcar como realizado
+        if (State != OrderState.Pending)
+          //con esta excepción se garantiza la consistencia de la entidad, es decir, que esté en 
+          //un estado válido
+          throw new InvalidOperationException("Can't mark as shipped an order that is not pending.");
+        
+        State = OrderState.shipped;
+        return this;
+      }
+
+    }//public class Order
+
+    /*
+    - https://youtu.be/Mn4TFBXa_2g?t=1726
+    - esta no es un agregate root ya que no va a persistir ella sola
+    */
+    public class OrderItem: Entity
+    {
+      public Product Product {get; private set;}
+      public Order Order{get; private set;}
+      protected OrderItem(){}
+      public OrderItem(Order order, int quantity, Product product)
+      {
+        if(quantity<=0)
+        {
+          //otra vez garantizamos que se cumpla la regla de negocio
+          throw new OrderingDomainException("Invalid quantity of units");
+        }
+
+        Order = order;
+        Quantity = quantity;
+        Product = product
+      }
+    }
+    ```
+    - [Repository Interfaces](https://youtu.be/Mn4TFBXa_2g?t=1757)
+    - Capa de dominio
+    ```c#
+    //Se le indica que el objeto que reciba la interface sea de tipo Aggregate
+    public interface IRepository<T> where T: IAggregateRoot
+    {
+
+    }
+
+    /*
+    - gestor del crud
+    - solo se le va a indicar que es lo que hara para persistir
+    */
+    public interface IOrderRepository: IRepository<Order>
+    {
+      void Add(Order order);
+      void Update(Order order);
+      Order Get(int orderId);
+    }
+    ```
 
 
     
