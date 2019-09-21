@@ -58,9 +58,33 @@ Yoelvis Mulen](https://www.youtube.com/watch?v=Mn4TFBXa_2g)
       - ![arquitecturas definidas](https://trello-attachments.s3.amazonaws.com/5d85fbb425740b29d72cedbb/821x492/0254df2b3b2a6555b30ff545cbafa1ea/image.png)
     - [Arquitectura en capas](https://youtu.be/Mn4TFBXa_2g?t=697)
       - Qué es el patrón **Domain Model**
-      - 
+      - ![en capas](https://trello-attachments.s3.amazonaws.com/5d85fbb425740b29d72cedbb/878x526/0464d30c7f5ac00c67f2cd8b543d4b3d/image.png)
+      - Traducción de MVC a DDD (PADI)
+      - Desventajas de MVC:
+        - La lógica de negocio está acoplada a los datos (data layer)
+        - La parte de negocio está distribuida por varias capas
+      - La capa de presentación será la mimsma.
+      - La capa de negocio se divide en dos partes:
+        - Application Layer (orquestación de casos de uso)
+        - Domain Layer (solo tendrémos la lógica de negocio)
+          - Esta capa no tiene dependencias de ningúna otra. (app e infra dependen de ella)
+      - La capa de infraestructura no solo va a ser el Data Layer, tambien contemplará los procesos de login, caching, self containers etc.
+  ## [Estructura de proyectos](https://youtu.be/Mn4TFBXa_2g?t=873)
+  - Arbol de carpetas y ficheros
+    - ![arbol carpetas](https://trello-attachments.s3.amazonaws.com/5d85fbb425740b29d72cedbb/535x422/402c5c08ee3fa58a8b562ab85333e66e/image.png)
+    - Tenemos los **bounded contexts** Catalog y Ordering
+    - **Ordering** al ser el más complejo lo dividimos en las 4 capas (PADI)
+    - Web.MVC es la capa de presentación
+## [Capas](https://youtu.be/Mn4TFBXa_2g?t=924)
+- **Domain Layer**
+  - ![D](https://trello-attachments.s3.amazonaws.com/5d85fbb425740b29d72cedbb/843x214/cd47a88a8807e9c2adc8b1883d12b497/image.png)
+  - Reglas de negocio
+  - Delega detalles técnicos a la capa de infraestructura
+- [**Diseño de interfaz**](https://youtu.be/Mn4TFBXa_2g?t=970)
+  - ![P](https://trello-attachments.s3.amazonaws.com/5d85fbb425740b29d72cedbb/650x494/ddf7f3f6b0e04711dbf1a3f0528ef5a0/image.png)
 
-      
+## [¿Cómo crear un modelo aislado y reutilizable que realmente represente el negocio?](https://youtu.be/Mn4TFBXa_2g?t=989)
+- 
     
       
 
