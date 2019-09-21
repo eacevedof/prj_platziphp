@@ -84,7 +84,33 @@ Yoelvis Mulen](https://www.youtube.com/watch?v=Mn4TFBXa_2g)
   - ![P](https://trello-attachments.s3.amazonaws.com/5d85fbb425740b29d72cedbb/650x494/ddf7f3f6b0e04711dbf1a3f0528ef5a0/image.png)
 
 ## [¿Cómo crear un modelo aislado y reutilizable que realmente represente el negocio?](https://youtu.be/Mn4TFBXa_2g?t=989)
-- 
+- [**modelo**](https://youtu.be/Mn4TFBXa_2g?t=998)
+  - Son las entidades y su relación
+  - Se parece la capa de datos modelada, no es así, esto tiene una complejidad extra
+  - ![entities](https://trello-attachments.s3.amazonaws.com/5d85fbb425740b29d72cedbb/920x493/cb79b80abf927550a558a5fabcae59fd/image.png)
+    - clientes, pedido, lineas de pedido, producto
+  - [Las entidades no solo van a tener datos](https://youtu.be/Mn4TFBXa_2g?t=1060)
+    - ![entity order](https://trello-attachments.s3.amazonaws.com/5d85fbb425740b29d72cedbb/607x387/205d30ddad620557342a37373edd4c6a/image.png)
+    - Todos los metodos presentes tienen una **alta cohesión** 
+      - `new Order(), AddOrderItem(item), MarkAsShipped(), Cancel()`
+  - [Agregados](https://youtu.be/Mn4TFBXa_2g?t=1123)
+    - Con esto se simplifica el modelo del dominio
+    - ![Agregados](https://trello-attachments.s3.amazonaws.com/5d85fbb425740b29d72cedbb/705x519/f25bb614e990138d252ef486678862ad/image.png)
+    - Son como reglas
+    - Nos restringe la existencia de entidades dependiendo de otras
+    - Debemos de tener todas las relaciones a travez de la entidad raiz (modelo estrella)
+    - Por ejemplo, la relación producto-orderitem no existiría, sería producto-order
+    - ![wrong relation](https://trello-attachments.s3.amazonaws.com/5d85fbb425740b29d72cedbb/745x496/f5d4f847ac9037a55d611d573ce6a3bd/image.png)
+    - ![agregados](https://trello-attachments.s3.amazonaws.com/5d85fbb425740b29d72cedbb/837x515/bac411f77da160b3ca23d113a2f9f4eb/image.png)
+    - Configuración de OrderAggregate
+      - ![conf OrderAggregate](https://trello-attachments.s3.amazonaws.com/5d85fbb425740b29d72cedbb/763x403/c0503bfc13e9b0de2f34319e3eaa6d2e/image.png)
+      - **IOrderRepository** Repo Interface
+      - **Order** Aggregate root
+      - **OrderItem** Child Entity
+      - **OrderState**  Enum type (menu en la orden)
+  
+
+
     
       
 
