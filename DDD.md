@@ -1,5 +1,4 @@
-# [Youtube - Domain Driven Design (DDD) - Diseño guiado por el dominio - Evento de Endava by 
-- [Yoelvis Mulen](https://www.youtube.com/watch?v=Mn4TFBXa_2g)
+# [Youtube - Domain Driven Design (DDD) - Diseño guiado por el dominio - Evento de Endava by Yoelvis Mulen](https://www.youtube.com/watch?v=Mn4TFBXa_2g)
 ### [Repo original](https://github.com/ymulenll/OnlineStore/tree/develop)
 
 ## [Sumario](https://youtu.be/Mn4TFBXa_2g?t=46)
