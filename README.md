@@ -672,6 +672,8 @@
     - Vamos a implementar un **contenedor** de inyección de dependencias que se encargará de esta tarea
     - Revisará las dependencias implicadas y las agregará al código
     - usaremos [composer require php-di/php-di](https://packagist.org/packages/php-di/php-di)
+        - [Documentacion de Php - Di](http://php-di.org/doc/)
+        - [Explicación de lo que es un inyector de dependencias](http://php-di.org/doc/understanding-di.html)
     - Nos apoyaremos en el **typehinting** para que el paquete sepa que es lo que tiene que inyectar **autowriting**
     - Inicialmente esta solución está bien, pero si se desea desacoplar más se podría usar **clases abstractas** y para eso si habría que definir ciertas **reglas de configuración** **expresive configuration** para explicarle a contenedor que:
     - > ...en esta clase que depende de esta clase abstracta quieres que se introduzca una clase hija concreta
