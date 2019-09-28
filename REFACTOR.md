@@ -250,12 +250,5 @@
   $user->password = password_hash('123456', PASSWORD_DEFAULT);
   $user->save();
   ```
-  
-    
-    
 
-
-
-
-
-
+# 28/09/2019 Pauso el refactor hasta entender el Inyector de dependencias
