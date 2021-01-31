@@ -57,6 +57,7 @@ $oRouteMap = $oAuraRouterContainer->getMap();
 
 include_once __DIR__ . "/../app/routes/routes_all.php";
 foreach($routes as $route)
+    //action is verb routemap->get|post(route_alias,url,[path-controller, method])
     $oRouteMap->{$route["action"]}(
         $route["name"]
         ,$route["path"]
